@@ -9,7 +9,7 @@ namespace Source.Code.Utils
     {
         [Header("System links")]
         [SerializeField] private Transform systemsRoot;
-        [SerializeField] private HeroSpawner heroSpawner;
+        [SerializeField] private UnitSpawner unitSpawner;
         [Header("Manual setup")]
         [SerializeField] private SessionSetup manualSetupSettings;
 
@@ -28,15 +28,17 @@ namespace Source.Code.Utils
             sessionSettings.InitPlayerID(0);
             //-----------------------------------
 
-            heroSpawner.Spawn(setupSettings);
+            unitSpawner.InitSpawn(setupSettings);
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
 
-            var virtCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
+            var virtualCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
 
-            
+            var gameStates = new GameState(unitSpawner, inputSystem, virtualCamera, setupSettings);
 
-
+            //TEMP
+            gameStates.StartGame();
+            //-----------------------------------
         }
 
         public void SetSettings(SessionSetup settings)

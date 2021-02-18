@@ -25,7 +25,6 @@ namespace Source.Code.Utils
         [SerializeField] private Vector2 maxLookPivotDistance = new Vector2(8.5f, 5);
 
         public GameObject LookPivotPrefab => lookPivotPrefab;
-        //добавить отдельные значения для x и y и привязать к 1920*1080
         public Vector2 MaxLookPivotDistance => maxLookPivotDistance;
     }
 
@@ -41,8 +40,10 @@ namespace Source.Code.Utils
     public class LayersSettings
     {
         [SerializeField] private LayerMask walls;
+        [SerializeField] private LayerMask ground;
 
         public LayerMask Walls => walls;
+        public LayerMask Ground => ground;
     }
 
     [Serializable]

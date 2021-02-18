@@ -8,7 +8,7 @@ namespace Source.Code.Units.Components
         private Unit unit;
         private Animator animator;
 
-        private int takeDamageLayerIndex;
+        private int takeDamageLayerIndex, fullBodyLayerIndex;
         private float takeDamageDuration = 0.667f;
         private WaitForSeconds waitForTakeDamage;
 
@@ -22,6 +22,7 @@ namespace Source.Code.Units.Components
             Transform = transform;
 
             takeDamageLayerIndex = animator.GetLayerIndex("TakeDamageLayer");
+            fullBodyLayerIndex = animator.GetLayerIndex("FullBody");
             waitForTakeDamage = new WaitForSeconds(takeDamageDuration);
 
             unit.HealthComponent.TakedDamage += OnTakeDamage;
@@ -45,6 +46,18 @@ namespace Source.Code.Units.Components
         public void PlayAnimation(string name)
         {
             animator.CrossFade(name, 0.1f);
+        }
+
+        public void PlayRollAnimation()
+        {
+            animator.SetLayerWeight(fullBodyLayerIndex, 1);
+            PlayAnimation("Roll");
+        }
+
+        public void EndRollAnimation()
+        {
+            animator.SetLayerWeight(fullBodyLayerIndex, 0);
+            PlayAnimation("Idle");
         }
 
         private IEnumerator TakeDamageCoroutine(Vector3 fromPoint, Unit fromUnit)

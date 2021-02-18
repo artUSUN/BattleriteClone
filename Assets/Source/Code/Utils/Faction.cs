@@ -42,5 +42,16 @@ namespace Source.Code.Utils
                 unit.Value.gameObject.layer = Layer;
             }
         }
+
+        public void AddUnit(Unit unit)
+        {
+            if (unitsList.ContainsKey(unit.Transform))
+            {
+                Debug.LogError("Unit already in unit list", unit.Transform);
+                return;
+            }
+            unitsList.Add(unit.Transform, unit);
+            unit.Initialize(this);
+        }
     }
 }

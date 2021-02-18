@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 850438725}
   - component: {fileID: 850438726}
   m_Layer: 0
-  m_Name: Hero Spawn System
+  m_Name: Unit Spawn System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   systemsRoot: {fileID: 1357792421}
-  heroSpawner: {fileID: 850438726}
+  unitSpawner: {fileID: 850438726}
   manualSetupSettings:
     players:
     - unitPrefab: {fileID: 1976316621184551738, guid: 3d585fdbbc040ae499c25a9a83a5a3c9,

@@ -5,18 +5,20 @@ using UnityEngine;
 
 namespace Source.Code.Utils
 {
-    public class HeroSpawner : MonoBehaviour
+    public class UnitSpawner : MonoBehaviour
     {
         [SerializeField] private SpawnPoints[] spawnPoints;
 
         private bool spawned = false;
+        private Transform[] factionsRoot;
+        private Dictionary<int, Transform> spawnPointsByPlayerID;
 
-        public void Spawn(SessionSetup setupSettings)
+        public Faction[] InitSpawn(SessionSetup setupSettings)
         {
             if (spawned) 
             {
-                Debug.LogError("Heroes already spawn");
-                return;
+                Debug.LogError("Units already spawn");
+                return null;
             }
 
             spawned = true;
@@ -38,6 +40,8 @@ namespace Source.Code.Utils
             if (unitsByFaction.Count > spawnPoints.Length) Debug.LogException(new Exception("Not enough spawn points"), transform);
 
 
+            spawnPointsByPlayerID = new Dictionary<int, Transform>();
+
             Faction[] factions = new Faction[unitsByFaction.Count];
 
             for (int i = 0; i < unitsByFaction.Count; i++)
@@ -46,17 +50,22 @@ namespace Source.Code.Utils
 
                 Dictionary<Transform, Unit> createdUnits = new Dictionary<Transform, Unit>();
 
+                factionsRoot = new Transform[factions.Length];
+
+
                 var newEmptyGO = new GameObject($"Faction {i}");
+                factionsRoot[i] = newEmptyGO.transform;
 
                 for (int j = 0; j < unitsByFaction[i].Count; j++)
                 {
+                    spawnPointsByPlayerID.Add(unitsByFaction[i][j].PlayerID, spawnPoints[i].Points[j]);
+
                     var newUnitTransform = 
-                        Instantiate(unitsByFaction[i][j].UnitPrefab, spawnPoints[i].Points[j].position, spawnPoints[i].Points[j].rotation, newEmptyGO.transform).transform;
-                    var unitSctipt = newUnitTransform.GetComponentInChildren<Unit>();
-                    createdUnits.Add(newUnitTransform, unitSctipt);
+                        Instantiate(unitsByFaction[i][j].UnitPrefab, spawnPoints[i].Points[j].position, spawnPoints[i].Points[j].rotation, factionsRoot[i]).transform;
+                    var unitScript = newUnitTransform.GetComponentInChildren<Unit>();
+                    createdUnits.Add(newUnitTransform, unitScript);
                     if (unitsByFaction[i][j].PlayerID == SessionSettings.Instance.CurrentPlayerID)
                     {
-                        var unitScript = newUnitTransform.GetComponent<Unit>();
                         if (unitScript == null) Debug.LogError("Unit is null", transform);
                         else SessionSettings.Instance.InitControlledUnit(unitScript);
                     }
@@ -65,8 +74,18 @@ namespace Source.Code.Utils
                 factions[i] = new Faction(createdUnits);
             }
 
-            SessionSettings.Instance.InitFactions(factions);
+            return factions;
         } 
+
+        public void RespawnUnit(PlayerSettings settings)
+        {
+            var spawnPoint = spawnPointsByPlayerID[settings.PlayerID];
+
+            var newUnitTransform =
+                Instantiate(settings.UnitPrefab, spawnPoint.position, spawnPoint.rotation, factionsRoot[settings.FactionID]).transform;
+            var unitScript = newUnitTransform.GetComponentInChildren<Unit>();
+            SessionSettings.Instance.Factions[settings.FactionID].AddUnit(unitScript);
+        }
     }
 
     [Serializable]

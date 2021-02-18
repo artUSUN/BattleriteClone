@@ -142,6 +142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   rotSpeed: 15
+  lockRotation: 0
+  lockMoving: 0
   lastFrameSightDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &3455908161061193089
 MonoBehaviour:
@@ -156,13 +158,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 34
-  cooldown: 1.2
+  attackCooldown: 1
   delay: 0.1
   missleLifeTime: 3
   missleSpeed: 12
   misslePrefab: {fileID: 1276973770915555227, guid: ef9ca6544c8e719408360c2ddb5053ed,
     type: 3}
   missleCreatePoint: {fileID: 1327722095006825574}
+  rollSpeed: 15
+  rollDuration: 0.4
+  rollCooldown: 2
 --- !u!114 &687136101723190751
 MonoBehaviour:
   m_ObjectHideFlags: 0

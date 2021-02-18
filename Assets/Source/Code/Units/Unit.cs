@@ -6,7 +6,7 @@ namespace Source.Code.Units
 {
     public class Unit : MonoBehaviour
     {
-        public Vector2 DeltaMove { get; set; }
+        public Vector2 DeltaMove { get; private set; }
 
         public Faction Faction { get; private set; }
         public AnimationComponent AnimationComponent { get; private set; }
@@ -44,6 +44,21 @@ namespace Source.Code.Units
         private void Update()
         {
             AnimationComponent.SetLegsAnimation();
+        }
+
+        private void OnSpacePressed()
+        {
+
+        }
+
+        private void OnMouse0Pressed()
+        {
+
+        }
+
+        private void OnDeltaMove(Vector2 deltaMove)
+        {
+            DeltaMove = deltaMove;
         }
     }
 }
