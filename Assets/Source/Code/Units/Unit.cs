@@ -1,4 +1,5 @@
-﻿using Source.Code.Units.Components;
+﻿using Source.Code.PlayerInput;
+using Source.Code.Units.Components;
 using Source.Code.Utils;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Source.Code.Units
     {
         public Vector2 DeltaMove { get; private set; }
 
+        public int OwnerPlayerID { get; private set; }
         public Faction Faction { get; private set; }
         public AnimationComponent AnimationComponent { get; private set; }
         public AttackComponent AttackComponent { get; private set; }
@@ -17,7 +19,7 @@ namespace Source.Code.Units
         public Transform Transform { get; private set; }
         
 
-        public void Initialize(Faction faction)
+        public void Initialize(Faction faction, int ownerID)
         {
             if (Faction != null)
             {
@@ -26,17 +28,30 @@ namespace Source.Code.Units
             }
 
             Faction = faction;
+            OwnerPlayerID = ownerID;
+        }
+
+        public void SubscribeToEvents(PlayerInputSystem inputSystem)
+        {
+            inputSystem.DeltaMove += OnDeltaMove;
+            inputSystem.SpacePressed += OnSpacePressed;
+            inputSystem.Mouse0Pressed += OnMouse0Pressed;
+            MoverComponent.SubscribeOnInput(inputSystem);
         }
 
         private void Awake()
         {
             Transform = transform;
+
             MoverComponent = GetComponent<Mover>();
             MoverComponent.Initialize(this);
+
             AttackComponent = GetComponent<AttackComponent>();
             AttackComponent.Initialize(this);
+
             HealthComponent = GetComponent<HealthComponent>();
             HealthComponent.Initialize(this);
+
             AnimationComponent = GetComponentInChildren<AnimationComponent>();
             AnimationComponent.Initialize(this);
         }
@@ -44,16 +59,17 @@ namespace Source.Code.Units
         private void Update()
         {
             AnimationComponent.SetLegsAnimation();
+            MoverComponent.Run();
         }
 
         private void OnSpacePressed()
         {
-
+            AttackComponent.TryDoRoll();
         }
 
         private void OnMouse0Pressed()
         {
-
+            AttackComponent.TryRaiseMainAttack();
         }
 
         private void OnDeltaMove(Vector2 deltaMove)

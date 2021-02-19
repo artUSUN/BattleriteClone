@@ -1,4 +1,5 @@
 ﻿using Source.Code.Cam;
+using Source.Code.Units;
 using Source.Code.Utils;
 using UnityEngine;
 
@@ -27,12 +28,13 @@ namespace Source.Code.PlayerInput
             sessionSettings = SessionSettings.Instance;
             settings = GlobalSettingsLoader.Load();
             maxDistFromUnit = settings.Input.MaxLookPivotDistance;
+            sessionSettings.ControlledUnitSet += OnControlledUnitSet;
         }
         #endregion
 
         public void SetPosition(Vector3 mousePos)
         {
-            if (sessionSettings.ControlledUnit == null) FreeCam(mousePos);
+            if (sessionSettings.LocalState.Current == LocalState.LocalStates.Spectator) FreeCam(mousePos);
             else PlayerSightCam(mousePos);
         }
 
@@ -54,6 +56,11 @@ namespace Source.Code.PlayerInput
             Vector3 offset = Vector3.forward * heightDeltaPos * maxDistFromUnit.y + Vector3.right * widthDeltaPos * maxDistFromUnit.x;
 
             Transform.position = sessionSettings.ControlledUnit.Transform.position + offset;
+        }
+
+        private void OnControlledUnitSet(Unit unit)
+        {
+            Transform.position = unit.Transform.position;
         }
     }
 }

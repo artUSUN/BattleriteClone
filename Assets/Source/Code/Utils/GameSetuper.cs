@@ -22,22 +22,22 @@ namespace Source.Code.Utils
             if (setupSettings == null) setupSettings = manualSetupSettings;
             else Debug.Log("Found setup settings from last scene");
 
-            var sessionSettings = SessionSettings.New(systemsRoot);
+            var sessionSettings = SessionSettings.New(systemsRoot, setupSettings);
 
             //TEMP
-            sessionSettings.InitPlayerID(0);
+            sessionSettings.SetPlayerID(0);
             //-----------------------------------
-
-            unitSpawner.InitSpawn(setupSettings);
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
 
             var virtualCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
 
-            var gameStates = new GameState(unitSpawner, inputSystem, virtualCamera, setupSettings);
+            var globalState = new GlobalState(unitSpawner, setupSettings, systemsRoot);
+            var localState = new LocalState(globalState, inputSystem, virtualCamera);
+            sessionSettings.SetGameStates(globalState, localState);
 
             //TEMP
-            gameStates.StartGame();
+            globalState.StartGame();
             //-----------------------------------
         }
 
@@ -71,7 +71,12 @@ namespace Source.Code.Utils
     public class SessionSetup
     {
         [SerializeField] private PlayerSettings[] players;
+        [Header("Game settings")]
+        [SerializeField] private float respawnDurationInSec = 5f;
+        [SerializeField] private float matchDurationInSec = 300f;
 
         public PlayerSettings[] Players => players;
+        public float RespawnDuration => respawnDurationInSec;
+        public float MatchDuration => matchDurationInSec;
     }
 }

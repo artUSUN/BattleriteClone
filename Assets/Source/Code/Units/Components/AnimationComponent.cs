@@ -5,12 +5,17 @@ namespace Source.Code.Units.Components
 {
     public class AnimationComponent : MonoBehaviour
     {
+        [SerializeField] private float bodyGetDownAfter = 3f;
+        [SerializeField] private float bodyGetDownSpeed = 2f;
+        [SerializeField] private float destroyDelay = 2f;
+
         private Unit unit;
         private Animator animator;
 
         private int takeDamageLayerIndex, fullBodyLayerIndex;
         private float takeDamageDuration = 0.667f;
         private WaitForSeconds waitForTakeDamage;
+        private Coroutine takeDamageCoroutine;
 
         public Transform Transform { get; private set; }
 
@@ -26,6 +31,7 @@ namespace Source.Code.Units.Components
             waitForTakeDamage = new WaitForSeconds(takeDamageDuration);
 
             unit.HealthComponent.TakedDamage += OnTakeDamage;
+            unit.HealthComponent.Died += OnDied;
         }
 
         public void SetLegsAnimation()
@@ -37,11 +43,6 @@ namespace Source.Code.Units.Components
             animator.SetFloat("MoveDeltaY", rot.z);
         }
 
-        public void OnTakeDamage(Vector3 fromPoint, Unit fromUnit)
-        {
-            StopAllCoroutines();
-            StartCoroutine(TakeDamageCoroutine(fromPoint, fromUnit));
-        }
 
         public void PlayAnimation(string name)
         {
@@ -58,6 +59,34 @@ namespace Source.Code.Units.Components
         {
             animator.SetLayerWeight(fullBodyLayerIndex, 0);
             PlayAnimation("Idle");
+        }
+
+        private void OnDied(Unit whoDies, Unit from)
+        {
+            animator.SetLayerWeight(fullBodyLayerIndex, 1);
+            PlayAnimation("Die");
+            unit.Model.SetParent(unit.Transform.parent);
+            StartCoroutine(DieCoroutine());
+        }
+
+        private IEnumerator DieCoroutine()
+        {
+            yield return new WaitForSeconds(bodyGetDownAfter);
+            var tr = transform;
+            float timer = 0;
+            while (timer < destroyDelay)
+            {
+                tr.Translate(Vector3.down * bodyGetDownSpeed * Time.deltaTime);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            Destroy(gameObject);
+        }
+
+        private void OnTakeDamage(Vector3 fromPoint, Unit fromUnit)
+        {
+            if (takeDamageCoroutine != null) StopCoroutine(takeDamageCoroutine);
+            takeDamageCoroutine = StartCoroutine(TakeDamageCoroutine(fromPoint, fromUnit));
         }
 
         private IEnumerator TakeDamageCoroutine(Vector3 fromPoint, Unit fromUnit)

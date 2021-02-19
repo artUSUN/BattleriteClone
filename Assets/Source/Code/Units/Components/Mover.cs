@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Source.Code.PlayerInput;
+using System.Collections;
 using UnityEngine;
 
 namespace Source.Code.Units.Components
@@ -11,28 +12,36 @@ namespace Source.Code.Units.Components
 
         private CharacterController cc;
         private Unit unit;
-
-        private float standartSpeed;
-        public bool lockRotation = false, lockMoving = false;
-
-        public Vector3 lastFrameSightDirection;
+        private Transform lookPivot;
+        private bool lockRotation = false, lockMoving = false;
 
         public void Initialize(Unit unit)
         {
             this.unit = unit;
             cc = GetComponent<CharacterController>();
-            standartSpeed = speed;
         }
 
-        public void Move(Vector2 direction)
+        public void SubscribeOnInput(PlayerInputSystem inputSystem)
         {
+            inputSystem.DeltaMove += Move;
+            lookPivot = inputSystem.LookPivot.Transform;
+        }
+
+        public void Run()
+        {
+            if (lookPivot != null) LookAtPivot();
+        }
+
+        private void Move(Vector2 direction)
+        {
+            if (direction == Vector2.zero);
             if (lockMoving) return;
             direction = Vector2.ClampMagnitude(direction, 1);
             var moveSpeed = speed * new Vector3(direction.x, 0, direction.y);
             cc.SimpleMove(moveSpeed);
         }
 
-        public void LookAt(Transform lookPivot)
+        private void LookAtPivot()
         {
             if (lockRotation) return;
             Vector3 newSightDirection = lookPivot.position - unit.Transform.position;

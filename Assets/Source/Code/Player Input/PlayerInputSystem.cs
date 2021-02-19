@@ -38,6 +38,13 @@ namespace Source.Code.PlayerInput
             HandleKeyboardInput();
         }
 
+        public void UnsubscribeEvents()
+        {
+            SpacePressed = null;
+            Mouse0Pressed = null;
+            DeltaMove = null;
+        }
+
         private void HandleKeyboardInput()
         {
             var hor = Input.GetAxisRaw("Horizontal");
@@ -54,10 +61,11 @@ namespace Source.Code.PlayerInput
         private void LookPivotMove()
         {
             var mousePosition = Input.mousePosition;
-            if (lastFrameMousePos == mousePosition)
+            if (lastFrameMousePos != mousePosition)
             {
                 LookPivot.SetPosition(mousePosition);
             }
+            lastFrameMousePos = mousePosition;
         }
     }
 }

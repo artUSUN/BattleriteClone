@@ -1,4 +1,5 @@
 ﻿using Source.Code.Units;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,20 +7,19 @@ namespace Source.Code.Utils
 {
     public class Faction
     {
+        private UnitSpawner unitSpawner;
+
         public int Index { get; private set; }
         public int Layer { get; private set; }
         public LayerMask EnemiesLayers { get; private set; }
 
 
-        private Dictionary<Transform, Unit> unitsList; //UnitTransform, Unit
+        private Dictionary<int, Unit> units; //Player id, Unit
 
-        public Faction(Dictionary<Transform, Unit> unitsList)
+        public Faction(Dictionary<int, Unit> units, UnitSpawner unitSpawner)
         {
-            this.unitsList = unitsList;
-            foreach (var unit in unitsList)
-            {
-                unit.Value.Initialize(this);
-            }
+            this.units = units;
+            this.unitSpawner = unitSpawner;
         }
 
         public void Initialize(int index)
@@ -37,21 +37,44 @@ namespace Source.Code.Utils
             }
             EnemiesLayers = enemiesLayers;
 
-            foreach (var unit in unitsList)
+            var tempUnits = units;
+            units = new Dictionary<int, Unit>();
+
+            foreach (var unit in tempUnits)
             {
-                unit.Value.gameObject.layer = Layer;
+                unit.Value.Initialize(this, unit.Key);
+                AddUnit(unit.Value);
             }
         }
 
         public void AddUnit(Unit unit)
         {
-            if (unitsList.ContainsKey(unit.Transform))
+            if (units.ContainsKey(unit.OwnerPlayerID))
             {
                 Debug.LogError("Unit already in unit list", unit.Transform);
                 return;
             }
-            unitsList.Add(unit.Transform, unit);
-            unit.Initialize(this);
+            units.Add(unit.OwnerPlayerID, unit);
+            unit.gameObject.layer = Layer;
+            unit.HealthComponent.Died += OnUnitDied;
+        }
+
+        private void RemoveUnit(Unit unit)
+        {
+            if (units.ContainsKey(unit.OwnerPlayerID) == false)
+            {
+                Debug.LogError("Cant find unit", unit.Transform);
+                return;
+            }
+            units.Remove(unit.OwnerPlayerID);
+        }
+
+        private void OnUnitDied(Unit who, Unit from)
+        {
+            RemoveUnit(who);
+            var players = SessionSettings.Instance.SetupSettings.Players;
+            var playerSettings = Array.Find(players, p => p.PlayerID == who.OwnerPlayerID);
+            unitSpawner.RespawnUnit(playerSettings);
         }
     }
 }

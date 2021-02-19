@@ -12,6 +12,7 @@ namespace Source.Code.Units.Components
 
         private Unit unit;
         private HPBar hpBar;
+        private bool isDied = false;
 
         public float CurrentHP { get; private set; }
         public float CurrentHPInPercent => CurrentHP / maxHP;
@@ -19,7 +20,7 @@ namespace Source.Code.Units.Components
         public event Action<float> HealthReduced;
         public event Action<float> HealthIncreased;
         public event Action<Vector3, Unit> TakedDamage;
-        public event Action<Unit> Died;
+        public event Action<Unit, Unit> Died;
 
         public void Initialize(Unit unit)
         {
@@ -51,7 +52,10 @@ namespace Source.Code.Units.Components
 
         private void Death(Unit from)
         {
-            Died?.Invoke(from);
+            if (isDied) return;
+            isDied = true;
+            Died?.Invoke(unit, from);
+            Destroy(unit.gameObject);
         }
     }
 }

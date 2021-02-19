@@ -1,0 +1,1489 @@
+fileFormatVersion: 2
+guid: 1e6a3c25bc04c8e499d2ae96429df342
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: 2161635120128993085
+    second: RigHeadGizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 4038546660467916715
+    second: RigHeadGizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 7068000388265425303
+    second: RigHeadGizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 5265590014892507521
+    second: RigHeadGizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -7971515108744504805
+    second: RigHeadGizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1175017498302759760
+    second: RigHeadGizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -6129331088679133743
+    second: RigHeadGizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3150932188534222748
+    second: RigHeadGizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -8491527369263871098
+    second: RigHeadGizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4903691284292571967
+    second: RigHeadGizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6435440204604341823
+    second: RigHeadGizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3461247253686057532
+    second: RigHeadGizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 1722329472274967406
+    second: RigHeadGizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7217119875494748794
+    second: RigHeadGizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -2298327983214803261
+    second: RigHeadGizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8613018916555704135
+    second: RigHeadGizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7935357947287892812
+    second: RigHeadGizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8462998883581568171
+    second: RigHeadGizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 3172927055522716825
+    second: RigHeadGizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5463493878288740073
+    second: RigHeadGizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 4361671810096089342
+    second: RigHeadGizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5983970731347031155
+    second: RigHeadGizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -3829800721573002503
+    second: RigRibcageGizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -3993191262157083523
+    second: RigRibcageGizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -5630004890482142478
+    second: RigRibcageGizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 7934101078614547191
+    second: RigRibcageGizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -6241303893848594373
+    second: RigRibcageGizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7419586340105697094
+    second: RigRibcageGizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 294529704575666432
+    second: RigRibcageGizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -9134905907861766505
+    second: RigRibcageGizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 5052835204655903457
+    second: RigRibcageGizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8046080390417278650
+    second: RigRibcageGizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 1841450885133791920
+    second: RigRibcageGizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -2464148734304354585
+    second: RigRibcageGizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -8239874398537791203
+    second: RigRibcageGizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8535912040042429449
+    second: RigRibcageGizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 4039046202241043167
+    second: RigRibcageGizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -2299614467666941569
+    second: RigRibcageGizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 5445715298148666065
+    second: RigRibcageGizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 699993987296901708
+    second: RigRibcageGizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6030156334983486947
+    second: RigRibcageGizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3523518780353997782
+    second: RigRibcageGizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 8610153297984905938
+    second: RigRibcageGizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5232068478593529917
+    second: RigRibcageGizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -86501251445686102
+    second: RigPelvisGizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -6642471548814082762
+    second: RigPelvisGizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -5541458143542910559
+    second: RigPelvisGizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -8793720179759086749
+    second: RigPelvisGizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -2046865084242117162
+    second: RigPelvisGizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4376581971247518291
+    second: RigPelvisGizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 6912475602355555017
+    second: RigPelvisGizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1622840507142558033
+    second: RigPelvisGizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7326381228203872713
+    second: RigPelvisGizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1137059995308240295
+    second: RigPelvisGizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 4261880381939338168
+    second: RigPelvisGizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3143537709749083716
+    second: RigPelvisGizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -4955286743946992818
+    second: RigPelvisGizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5033671713223309244
+    second: RigPelvisGizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 4781918772415994291
+    second: RigPelvisGizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5579278149505746639
+    second: RigPelvisGizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -7070051893152994418
+    second: RigPelvisGizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3399748190812823752
+    second: RigPelvisGizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 1478887801733053595
+    second: RigPelvisGizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5807040440234067596
+    second: RigPelvisGizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -7270281035482838230
+    second: RigPelvisGizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -500954487557745838
+    second: RigPelvisGizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: 6236159258340689345
+    second: RigLArm1Gizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 8748945396366180132
+    second: RigLArm1Gizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 4938288389576001763
+    second: RigLArm1Gizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 3485672483778239133
+    second: RigLArm1Gizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -1373362543376531563
+    second: RigLArm1Gizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7460847589835919671
+    second: RigLArm1Gizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 6276857544964599382
+    second: RigLArm1Gizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6503616705778293154
+    second: RigLArm1Gizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 8168168440715899341
+    second: RigLArm1Gizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8268331482332720594
+    second: RigLArm1Gizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 2748687366561360614
+    second: RigLArm1Gizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3682356475697098037
+    second: RigLArm1Gizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -3191233323093182622
+    second: RigLArm1Gizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -9215879505191646961
+    second: RigLArm1Gizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 2466164635848004605
+    second: RigLArm1Gizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 238645772515963755
+    second: RigLArm1Gizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -8342471955547902247
+    second: RigLArm1Gizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7731554224315681177
+    second: RigLArm1Gizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -8141771352830412511
+    second: RigLArm1Gizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8913349118216797639
+    second: RigLArm1Gizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 1368522721699229818
+    second: RigLArm1Gizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5460739165077222278
+    second: RigLArm1Gizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -3097925599512592287
+    second: RigLArm2Gizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 1380683768941481383
+    second: RigLArm2Gizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 6869437820951393015
+    second: RigLArm2Gizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -3453485574600797619
+    second: RigLArm2Gizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 527483179027918965
+    second: RigLArm2Gizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3978028107041259176
+    second: RigLArm2Gizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -7013394273336103466
+    second: RigLArm2Gizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3083152530525959423
+    second: RigLArm2Gizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1371476747071131200
+    second: RigLArm2Gizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5049148513019845868
+    second: RigLArm2Gizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -5137532135800820708
+    second: RigLArm2Gizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1927267100324502256
+    second: RigLArm2Gizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 636269923996168661
+    second: RigLArm2Gizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 9118502415032780838
+    second: RigLArm2Gizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -3796858331273400046
+    second: RigLArm2Gizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1376246949554210650
+    second: RigLArm2Gizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -4580360047224679886
+    second: RigLArm2Gizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5935197607819480101
+    second: RigLArm2Gizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -4434800320234544678
+    second: RigLArm2Gizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1428059322886142344
+    second: RigLArm2Gizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 3664497404070504297
+    second: RigLArm2Gizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -438802760342572010
+    second: RigLArm2Gizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -6412948225248849351
+    second: RigLArmPalmGizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -7947220002976654799
+    second: RigLArmPalmGizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -1679712620507247387
+    second: RigLArmPalmGizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 6411059202643168855
+    second: RigLArmPalmGizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 2275610525402765733
+    second: RigLArmPalmGizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6859062181492504065
+    second: RigLArmPalmGizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 2423182825791978840
+    second: RigLArmPalmGizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 62045550867882018
+    second: RigLArmPalmGizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -5804579851701308692
+    second: RigLArmPalmGizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8126388324839006760
+    second: RigLArmPalmGizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -2945862494258581992
+    second: RigLArmPalmGizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1264861532140762217
+    second: RigLArmPalmGizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 3255000439882169871
+    second: RigLArmPalmGizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8958857265107566079
+    second: RigLArmPalmGizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -6662025564229981033
+    second: RigLArmPalmGizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5061667310366634093
+    second: RigLArmPalmGizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 4504796294493233782
+    second: RigLArmPalmGizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8027003309404192794
+    second: RigLArmPalmGizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 8980424282961581757
+    second: RigLArmPalmGizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7023436495095429483
+    second: RigLArmPalmGizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -6287567197396807832
+    second: RigLArmPalmGizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 491463605762926543
+    second: RigLArmPalmGizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -4186877201010769460
+    second: RigRArm1Gizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 9042517806310258580
+    second: RigRArm1Gizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 6683417982588390160
+    second: RigRArm1Gizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 4272165319475101064
+    second: RigRArm1Gizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 4931668223216657157
+    second: RigRArm1Gizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4555263655354453646
+    second: RigRArm1Gizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -6377814092294705646
+    second: RigRArm1Gizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8574052384750930314
+    second: RigRArm1Gizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1183685232010764964
+    second: RigRArm1Gizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6631287587785169530
+    second: RigRArm1Gizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 8301634141755849046
+    second: RigRArm1Gizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6910130720694098407
+    second: RigRArm1Gizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 3866303912055617923
+    second: RigRArm1Gizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7077473274314474188
+    second: RigRArm1Gizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -3025305889852123520
+    second: RigRArm1Gizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6221156454265699647
+    second: RigRArm1Gizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -3288509397718628529
+    second: RigRArm1Gizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5356230660552945401
+    second: RigRArm1Gizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -5910429524520534283
+    second: RigRArm1Gizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3182392769830091762
+    second: RigRArm1Gizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 748319599573998077
+    second: RigRArm1Gizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1743527974001171701
+    second: RigRArm1Gizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -2395359479370637738
+    second: RigRArm2Gizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -2993313158496362963
+    second: RigRArm2Gizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 1831135094819761804
+    second: RigRArm2Gizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 6934552883707394801
+    second: RigRArm2Gizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -1809811340096622750
+    second: RigRArm2Gizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7496983557539321567
+    second: RigRArm2Gizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -3537912211029448168
+    second: RigRArm2Gizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -351026457570456831
+    second: RigRArm2Gizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -7379588568898955447
+    second: RigRArm2Gizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1322311963696824346
+    second: RigRArm2Gizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7518388429887299688
+    second: RigRArm2Gizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7780044279130694889
+    second: RigRArm2Gizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -4079070914956390457
+    second: RigRArm2Gizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2542123395110597518
+    second: RigRArm2Gizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 6706500895006355169
+    second: RigRArm2Gizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -763511228983917087
+    second: RigRArm2Gizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 4993173062188357463
+    second: RigRArm2Gizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7759701454692237442
+    second: RigRArm2Gizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7998701172883032688
+    second: RigRArm2Gizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4172725229608074152
+    second: RigRArm2Gizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 6855061681472478714
+    second: RigRArm2Gizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1933219200136816564
+    second: RigRArm2Gizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: 2104252101425308394
+    second: RigRArmPalmGizmo|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 6842698080585172952
+    second: RigRArmPalmGizmo|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -8681216927338104139
+    second: RigRArmPalmGizmo|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -6443408723263329952
+    second: RigRArmPalmGizmo|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 1953386152927098081
+    second: RigRArmPalmGizmo|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5488257107463701343
+    second: RigRArmPalmGizmo|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 1458147117411099583
+    second: RigRArmPalmGizmo|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7875220993311551931
+    second: RigRArmPalmGizmo|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -2794933174402057249
+    second: RigRArmPalmGizmo|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6996266219247918292
+    second: RigRArmPalmGizmo|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -3150676166460758323
+    second: RigRArmPalmGizmo|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7084425516676191223
+    second: RigRArmPalmGizmo|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 388373580531095853
+    second: RigRArmPalmGizmo|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -827238927515979362
+    second: RigRArmPalmGizmo|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -2362210637500381540
+    second: RigRArmPalmGizmo|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -467583167304206739
+    second: RigRArmPalmGizmo|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 3316283126049821972
+    second: RigRArmPalmGizmo|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4742083180575211976
+    second: RigRArmPalmGizmo|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 2942057645917432929
+    second: RigRArmPalmGizmo|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6450122261042538882
+    second: RigRArmPalmGizmo|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -4139063953425661283
+    second: RigRArmPalmGizmo|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2047947364798300654
+    second: RigRArmPalmGizmo|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -1676495014900090165
+    second: Armature|Armature.001|Take 001|BaseLayer
+  - first:
+      74: 5862543501114407046
+    second: Armature|Armature|Take 001|BaseLayer
+  - first:
+      74: -2501389155214045261
+    second: Armature|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -4405072969205140745
+    second: Armature|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 2567020758322820567
+    second: Armature|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 3770618947877811912
+    second: Armature|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 8911274988125442991
+    second: Armature|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -253539061698503747
+    second: Armature|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -7713916640044562261
+    second: Armature|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5457930584522226327
+    second: Armature|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1877645123842585245
+    second: Armature|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1160176471420178746
+    second: Armature|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 2461227272127227748
+    second: Armature|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5534490885918484571
+    second: Armature|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 4479286367962525218
+    second: Armature|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6602079123016608180
+    second: Armature|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 4794185514150423728
+    second: Armature|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3414493727330955168
+    second: Armature|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 4905936802379338431
+    second: Armature|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5355140898831152209
+    second: Armature|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 8638971078730794978
+    second: Armature|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6852524300933405669
+    second: Armature|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 8280948824424562424
+    second: Armature|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2277830313667930361
+    second: Armature|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -8845826608510514167
+    second: Placeholder Shield|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -1680908623605155957
+    second: Placeholder Shield|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -3697227094829255757
+    second: Placeholder Shield|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 5709806408688372774
+    second: Placeholder Shield|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 4300097352946687857
+    second: Placeholder Shield|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1707955447742280587
+    second: Placeholder Shield|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -2703256496323210788
+    second: Placeholder Shield|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8222956469668875281
+    second: Placeholder Shield|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6556719542322336025
+    second: Placeholder Shield|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4134890193094208250
+    second: Placeholder Shield|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6531211686382003426
+    second: Placeholder Shield|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -2057361791432972182
+    second: Placeholder Shield|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -1889599513368665808
+    second: Placeholder Shield|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7783886895859158454
+    second: Placeholder Shield|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 1634587057969587079
+    second: Placeholder Shield|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3717192613501755781
+    second: Placeholder Shield|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -3340744023990847179
+    second: Placeholder Shield|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -687137576553415171
+    second: Placeholder Shield|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -7751738433494530185
+    second: Placeholder Shield|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3798149277264825461
+    second: Placeholder Shield|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -4851521036454206466
+    second: Placeholder Shield|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7273873281820722731
+    second: Placeholder Shield|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: 5102633460460132563
+    second: Placeholder Sword|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 1550928394790246898
+    second: Placeholder Sword|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 229772683488743828
+    second: Placeholder Sword|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -749840548889018788
+    second: Placeholder Sword|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 2825113274859621908
+    second: Placeholder Sword|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4771916845589204654
+    second: Placeholder Sword|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -7971850401027342714
+    second: Placeholder Sword|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3247374205129278937
+    second: Placeholder Sword|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -5838665219007275467
+    second: Placeholder Sword|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8390316703632714678
+    second: Placeholder Sword|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -250479233084336132
+    second: Placeholder Sword|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8747120564069166209
+    second: Placeholder Sword|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -1780442129319245824
+    second: Placeholder Sword|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4488345778566444057
+    second: Placeholder Sword|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -4329665569682805932
+    second: Placeholder Sword|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8693154376548727084
+    second: Placeholder Sword|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 3413637901337220398
+    second: Placeholder Sword|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6640304157386984943
+    second: Placeholder Sword|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 5780145035850673175
+    second: Placeholder Sword|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4780026201143354494
+    second: Placeholder Sword|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -507672079003480215
+    second: Placeholder Sword|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8094164253178375914
+    second: Placeholder Sword|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -3547957138999585964
+    second: RigHeadGizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -3974562721228502067
+    second: RigHeadGizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -621049255764928893
+    second: RigHeadGizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -6511862858920694445
+    second: RigHeadGizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -1866509184774967187
+    second: RigHeadGizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 685607255958465996
+    second: RigHeadGizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -562678307384518775
+    second: RigHeadGizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8167788174819750333
+    second: RigHeadGizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 1358529959775291592
+    second: RigHeadGizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8439452682997456849
+    second: RigHeadGizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6899081332295555791
+    second: RigHeadGizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7193714792094889968
+    second: RigHeadGizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 3834243774261604867
+    second: RigHeadGizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4244052718049242130
+    second: RigHeadGizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 7348548595466253934
+    second: RigHeadGizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5153914261528247924
+    second: RigHeadGizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -5552418785829144437
+    second: RigHeadGizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5325866332724683721
+    second: RigHeadGizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 1552682260649897915
+    second: RigHeadGizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4748491947684785009
+    second: RigHeadGizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -4506036602185145986
+    second: RigHeadGizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1444417686181752676
+    second: RigHeadGizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: 7140044817381796677
+    second: RigRibcageGizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -2006420209752275947
+    second: RigRibcageGizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 3096864562713490120
+    second: RigRibcageGizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -4990540560539958760
+    second: RigRibcageGizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 6923954908962264464
+    second: RigRibcageGizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8279320703932913362
+    second: RigRibcageGizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 7246950211494780805
+    second: RigRibcageGizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4407122964765826842
+    second: RigRibcageGizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 8930192955679597583
+    second: RigRibcageGizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6018140627473259620
+    second: RigRibcageGizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 1708966449932764584
+    second: RigRibcageGizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6578472873069632826
+    second: RigRibcageGizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 6649524049954505226
+    second: RigRibcageGizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7987415761957997862
+    second: RigRibcageGizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 3742194154654807436
+    second: RigRibcageGizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5228613805626176441
+    second: RigRibcageGizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -4031434363131066463
+    second: RigRibcageGizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1912054462909011591
+    second: RigRibcageGizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1948403461514142668
+    second: RigRibcageGizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2477596194510394413
+    second: RigRibcageGizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 8832711836872833415
+    second: RigRibcageGizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8122200703333621719
+    second: RigRibcageGizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: 815204441710331253
+    second: RigPelvisGizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 802680538997617567
+    second: RigPelvisGizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 6583815823828646333
+    second: RigPelvisGizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -6068328798676306916
+    second: RigPelvisGizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 4123902395247275303
+    second: RigPelvisGizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1973691624069268172
+    second: RigPelvisGizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -4674635519604980028
+    second: RigPelvisGizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8443453948616954521
+    second: RigPelvisGizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1215387813143459646
+    second: RigPelvisGizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2389842108484959729
+    second: RigPelvisGizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 2720403536495323876
+    second: RigPelvisGizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5232939997059832294
+    second: RigPelvisGizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 740385380660777651
+    second: RigPelvisGizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1414089034519689318
+    second: RigPelvisGizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 4602201295345834549
+    second: RigPelvisGizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 489492810178281497
+    second: RigPelvisGizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 3800919283053809497
+    second: RigPelvisGizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -2988207817151162249
+    second: RigPelvisGizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 3529973551023568024
+    second: RigPelvisGizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1543965928511296521
+    second: RigPelvisGizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 7715013150327690640
+    second: RigPelvisGizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3742882645770447696
+    second: RigPelvisGizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -9101428366959590993
+    second: RigLArm1Gizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -813270715827586898
+    second: RigLArm1Gizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 8315205211019235458
+    second: RigLArm1Gizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 1474597461542991328
+    second: RigLArm1Gizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 3723229422414689411
+    second: RigLArm1Gizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -264393764795887480
+    second: RigLArm1Gizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -8922260793128814162
+    second: RigLArm1Gizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7989047132090805659
+    second: RigLArm1Gizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -8387856876653017238
+    second: RigLArm1Gizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -9007917537702227947
+    second: RigLArm1Gizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1278747368146886233
+    second: RigLArm1Gizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7044022291858396929
+    second: RigLArm1Gizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -2115834287198922662
+    second: RigLArm1Gizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1067181366457178572
+    second: RigLArm1Gizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 4800422547522752451
+    second: RigLArm1Gizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4928736566614361232
+    second: RigLArm1Gizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 6070161534781578102
+    second: RigLArm1Gizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3200173057369319148
+    second: RigLArm1Gizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6771816265385778508
+    second: RigLArm1Gizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7785157089361537290
+    second: RigLArm1Gizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -3740111178274278540
+    second: RigLArm1Gizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1880293425054036406
+    second: RigLArm1Gizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -4425397185994970256
+    second: RigLArm2Gizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 1600125661064030028
+    second: RigLArm2Gizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 7021401735807729470
+    second: RigLArm2Gizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -271605825698461349
+    second: RigLArm2Gizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 1023402391172371649
+    second: RigLArm2Gizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7916627831770506705
+    second: RigLArm2Gizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 1381742316122394565
+    second: RigLArm2Gizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6815591671901022611
+    second: RigLArm2Gizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -1677794617843636885
+    second: RigLArm2Gizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -9145824078481734061
+    second: RigLArm2Gizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -9142923051522386803
+    second: RigLArm2Gizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 5998921137404650832
+    second: RigLArm2Gizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -8220697595211816069
+    second: RigLArm2Gizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3464399360638202073
+    second: RigLArm2Gizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 38574694108359041
+    second: RigLArm2Gizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2679128021536601910
+    second: RigLArm2Gizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 8625787503027474069
+    second: RigLArm2Gizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6437594638958176217
+    second: RigLArm2Gizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -962293100778682178
+    second: RigLArm2Gizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4990377855734570075
+    second: RigLArm2Gizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 9143895717629956488
+    second: RigLArm2Gizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -5458215722707230021
+    second: RigLArm2Gizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -250145433383408058
+    second: RigLArmPalmGizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -1893891958722221964
+    second: RigLArmPalmGizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -4961849961280863488
+    second: RigLArmPalmGizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 7102079604369656757
+    second: RigLArmPalmGizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 7158592988222352965
+    second: RigLArmPalmGizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1919124425188780341
+    second: RigLArmPalmGizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 4820878334662796029
+    second: RigLArmPalmGizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8726268741718270825
+    second: RigLArmPalmGizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7038714024174909686
+    second: RigLArmPalmGizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3648212890293769372
+    second: RigLArmPalmGizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 9143625423545029536
+    second: RigLArmPalmGizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6380490883645914604
+    second: RigLArmPalmGizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 3247961518792360778
+    second: RigLArmPalmGizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3048401120568027345
+    second: RigLArmPalmGizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 7780430200698472277
+    second: RigLArmPalmGizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6701128311444897081
+    second: RigLArmPalmGizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -6647735274694425121
+    second: RigLArmPalmGizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6231333957954057054
+    second: RigLArmPalmGizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -323123387730163762
+    second: RigLArmPalmGizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3001087341189847497
+    second: RigLArmPalmGizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -8439639895689396365
+    second: RigLArmPalmGizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3276959900837597298
+    second: RigLArmPalmGizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -4258688844662109705
+    second: RigRArm1Gizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: 7871847665100117605
+    second: RigRArm1Gizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -4486552451957354784
+    second: RigRArm1Gizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: -7589348909323252405
+    second: RigRArm1Gizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: 1617507873205479195
+    second: RigRArm1Gizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -3568807202245194430
+    second: RigRArm1Gizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 6049361419612653153
+    second: RigRArm1Gizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7615693315627134113
+    second: RigRArm1Gizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 255382328891483540
+    second: RigRArm1Gizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8868149847162406538
+    second: RigRArm1Gizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -2645840124647421497
+    second: RigRArm1Gizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8683883014237811287
+    second: RigRArm1Gizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -8191037603357752080
+    second: RigRArm1Gizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -2807629022666921514
+    second: RigRArm1Gizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -4513032422617719002
+    second: RigRArm1Gizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 9221309776753947165
+    second: RigRArm1Gizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -292375511364919249
+    second: RigRArm1Gizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 1051930855823806635
+    second: RigRArm1Gizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7467743194437940955
+    second: RigRArm1Gizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -4157877613221636753
+    second: RigRArm1Gizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: 6050791083529815068
+    second: RigRArm1Gizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4932143682043757980
+    second: RigRArm1Gizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: -7891852945905622296
+    second: RigRArm2Gizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -6903466205853863876
+    second: RigRArm2Gizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: 8116952396917820318
+    second: RigRArm2Gizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 154825077847078796
+    second: RigRArm2Gizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -5960322615738613223
+    second: RigRArm2Gizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7962450549856013287
+    second: RigRArm2Gizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: -8884801026432175474
+    second: RigRArm2Gizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2850927287713611790
+    second: RigRArm2Gizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -8048103713066363763
+    second: RigRArm2Gizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 6718324764760947272
+    second: RigRArm2Gizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 4778575977764525479
+    second: RigRArm2Gizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2306923490461572319
+    second: RigRArm2Gizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -8051254263354393711
+    second: RigRArm2Gizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2771113615839781656
+    second: RigRArm2Gizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: 6630588261147570805
+    second: RigRArm2Gizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 3401154631938490961
+    second: RigRArm2Gizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -2683934666968591774
+    second: RigRArm2Gizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 8342401233045675727
+    second: RigRArm2Gizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 7883660773343547778
+    second: RigRArm2Gizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2688627672390206222
+    second: RigRArm2Gizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -810711205968038300
+    second: RigRArm2Gizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2902338124723854362
+    second: RigRArm2Gizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  - first:
+      74: 6468579900630509361
+    second: RigRArmPalmGizmo.001|Placeholder Shield.001|Take 001|BaseLayer
+  - first:
+      74: -7379905029744156052
+    second: RigRArmPalmGizmo.001|Placeholder Shield|Take 001|BaseLayer
+  - first:
+      74: -3884468391549102827
+    second: RigRArmPalmGizmo.001|Placeholder Sword.001|Take 001|BaseLayer
+  - first:
+      74: 7892740551374916722
+    second: RigRArmPalmGizmo.001|Placeholder Sword|Take 001|BaseLayer
+  - first:
+      74: -7118743553702086785
+    second: RigRArmPalmGizmo.001|RigHeadGizmo.001|Take 001|BaseLayer
+  - first:
+      74: 2116176019362835324
+    second: RigRArmPalmGizmo.001|RigHeadGizmo|Take 001|BaseLayer
+  - first:
+      74: 2208261708826607111
+    second: RigRArmPalmGizmo.001|RigLArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 7116592382522752291
+    second: RigRArmPalmGizmo.001|RigLArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: -5374772391137862560
+    second: RigRArmPalmGizmo.001|RigLArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 4837015339498418655
+    second: RigRArmPalmGizmo.001|RigLArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: -38136116049207639
+    second: RigRArmPalmGizmo.001|RigLArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7376979481846154399
+    second: RigRArmPalmGizmo.001|RigLArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -4959115883885660462
+    second: RigRArmPalmGizmo.001|RigPelvisGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -7813447757512129786
+    second: RigRArmPalmGizmo.001|RigPelvisGizmo|Take 001|BaseLayer
+  - first:
+      74: -5158997485531415917
+    second: RigRArmPalmGizmo.001|RigRArm1Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: 687819760208154991
+    second: RigRArmPalmGizmo.001|RigRArm1Gizmo|Take 001|BaseLayer
+  - first:
+      74: 4411762518622559176
+    second: RigRArmPalmGizmo.001|RigRArm2Gizmo.001|Take 001|BaseLayer
+  - first:
+      74: -1597162313431109065
+    second: RigRArmPalmGizmo.001|RigRArm2Gizmo|Take 001|BaseLayer
+  - first:
+      74: 1062945552081826855
+    second: RigRArmPalmGizmo.001|RigRArmPalmGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -6888240953547694547
+    second: RigRArmPalmGizmo.001|RigRArmPalmGizmo|Take 001|BaseLayer
+  - first:
+      74: -376855033408983695
+    second: RigRArmPalmGizmo.001|RigRibcageGizmo.001|Take 001|BaseLayer
+  - first:
+      74: -8114402413420637035
+    second: RigRArmPalmGizmo.001|RigRibcageGizmo|Take 001|BaseLayer
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

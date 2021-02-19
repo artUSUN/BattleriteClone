@@ -1,5 +1,6 @@
 ﻿using Source.Code.Units;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,13 +13,17 @@ namespace Source.Code.Utils
         private bool spawned = false;
         private Transform[] factionsRoot;
         private Dictionary<int, Transform> spawnPointsByPlayerID;
+        private WaitForSeconds respawnWaiter;
+        private SessionSettings sessionSettings;
 
-        public Faction[] InitSpawn(SessionSetup setupSettings)
+        public void InitSpawn(SessionSetup setupSettings)
         {
+            sessionSettings = SessionSettings.Instance;
+
             if (spawned) 
             {
                 Debug.LogError("Units already spawn");
-                return null;
+                return;
             }
 
             spawned = true;
@@ -48,10 +53,9 @@ namespace Source.Code.Utils
             {
                 if (unitsByFaction[i].Count > spawnPoints[i].Points.Length) Debug.LogException(new Exception($"Not enough spawn points. i = {i}"), transform);
 
-                Dictionary<Transform, Unit> createdUnits = new Dictionary<Transform, Unit>();
+                Dictionary<int, Unit> createdUnits = new Dictionary<int, Unit>();
 
                 factionsRoot = new Transform[factions.Length];
-
 
                 var newEmptyGO = new GameObject($"Faction {i}");
                 factionsRoot[i] = newEmptyGO.transform;
@@ -63,28 +67,44 @@ namespace Source.Code.Utils
                     var newUnitTransform = 
                         Instantiate(unitsByFaction[i][j].UnitPrefab, spawnPoints[i].Points[j].position, spawnPoints[i].Points[j].rotation, factionsRoot[i]).transform;
                     var unitScript = newUnitTransform.GetComponentInChildren<Unit>();
-                    createdUnits.Add(newUnitTransform, unitScript);
-                    if (unitsByFaction[i][j].PlayerID == SessionSettings.Instance.CurrentPlayerID)
+                    createdUnits.Add(unitsByFaction[i][j].PlayerID, unitScript);
+                    if (unitsByFaction[i][j].PlayerID == sessionSettings.CurrentPlayerID)
                     {
                         if (unitScript == null) Debug.LogError("Unit is null", transform);
-                        else SessionSettings.Instance.InitControlledUnit(unitScript);
+                        else sessionSettings.SetControlledUnit(unitScript);
                     }
                 }
 
-                factions[i] = new Faction(createdUnits);
+                factions[i] = new Faction(createdUnits, this);
             }
 
-            return factions;
+            sessionSettings.SetFactions(factions);
         } 
 
-        public void RespawnUnit(PlayerSettings settings)
+        public void RespawnUnit(PlayerSettings playerSettings)
         {
-            var spawnPoint = spawnPointsByPlayerID[settings.PlayerID];
+            Debug.Log("Respawn unit " + playerSettings.PlayerID);
+            StartCoroutine(RespawnCoroutine(playerSettings));
+        }
+
+        private IEnumerator RespawnCoroutine(PlayerSettings playerSettings)
+        {
+            if (respawnWaiter == null)
+            {
+                respawnWaiter = new WaitForSeconds(sessionSettings.SetupSettings.RespawnDuration);
+            }
+
+            yield return respawnWaiter;
+
+            var spawnPoint = spawnPointsByPlayerID[playerSettings.PlayerID];
 
             var newUnitTransform =
-                Instantiate(settings.UnitPrefab, spawnPoint.position, spawnPoint.rotation, factionsRoot[settings.FactionID]).transform;
+                Instantiate(playerSettings.UnitPrefab, spawnPoint.position, spawnPoint.rotation, factionsRoot[playerSettings.FactionID]).transform;
             var unitScript = newUnitTransform.GetComponentInChildren<Unit>();
-            SessionSettings.Instance.Factions[settings.FactionID].AddUnit(unitScript);
+            unitScript.Initialize(sessionSettings.Factions[playerSettings.FactionID], playerSettings.PlayerID);
+
+            sessionSettings.Factions[playerSettings.FactionID].AddUnit(unitScript);
+            if (sessionSettings.CurrentPlayerID == playerSettings.PlayerID) sessionSettings.SetControlledUnit(unitScript);
         }
     }
 
@@ -95,5 +115,4 @@ namespace Source.Code.Utils
 
         public Transform[] Points => points;
     }
-
 }

@@ -23,6 +23,9 @@ MonoBehaviour:
     walls:
       serializedVersion: 2
       m_Bits: 512
+    ground:
+      serializedVersion: 2
+      m_Bits: 256
   prefabs:
     unitBar: {fileID: 9200709040939020761, guid: 7b98292a0a6394c46ae9026a90cde7b2,
       type: 3}

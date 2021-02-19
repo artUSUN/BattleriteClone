@@ -53,7 +53,8 @@ namespace Source.Code.Environment.Missle
                     if (unit != null) unit.HealthComponent.ApplyDamage(damage, tr.position, owner);
                 }
 
-                Instantiate(expPrefab, tr.position + direction * radius, Quaternion.identity);
+                var expGO = Instantiate(expPrefab, tr.position + direction * radius, Quaternion.identity);
+                Destroy(expGO, lifeTime);
                 Destroy(this.gameObject);
             }
         }
