@@ -30,12 +30,12 @@ namespace Source.Code.Utils
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
 
-            var virtualCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
-
             var globalState = new GlobalState(unitSpawner, setupSettings, systemsRoot);
-            var localState = new LocalState(globalState, inputSystem, virtualCamera);
+            var localState = new LocalState(globalState, inputSystem);
             sessionSettings.SetGameStates(globalState, localState);
 
+
+            var virtualCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
             //TEMP
             globalState.StartGame();
             //-----------------------------------

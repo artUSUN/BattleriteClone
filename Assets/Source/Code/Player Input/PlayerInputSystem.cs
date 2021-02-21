@@ -6,8 +6,6 @@ namespace Source.Code.PlayerInput
 {
     public class PlayerInputSystem : MonoBehaviour
     {
-        private Vector3 lastFrameMousePos;
-
         public LookPivot LookPivot { get; private set; }
 
         public event Action SpacePressed;
@@ -60,12 +58,7 @@ namespace Source.Code.PlayerInput
 
         private void LookPivotMove()
         {
-            var mousePosition = Input.mousePosition;
-            if (lastFrameMousePos != mousePosition)
-            {
-                LookPivot.SetPosition(mousePosition);
-            }
-            lastFrameMousePos = mousePosition;
+            LookPivot.SetPosition(Input.mousePosition);
         }
     }
 }

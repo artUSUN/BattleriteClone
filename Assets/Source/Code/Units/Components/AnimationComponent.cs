@@ -91,11 +91,10 @@ namespace Source.Code.Units.Components
 
         private IEnumerator TakeDamageCoroutine(Vector3 fromPoint, Unit fromUnit)
         {
-            animator.Play("TakeDamage");
             animator.SetLayerWeight(takeDamageLayerIndex, 1);
-            float angle = Vector3.SignedAngle(unit.Model.forward, (fromPoint - unit.Transform.position), Vector3.up);
-            int takeDamageSide = angle <= 0 ? 0 : 1;
-            animator.SetFloat("TakeDamageSide", takeDamageSide);
+            float angle = Vector3.SignedAngle(unit.Model.right, (fromPoint - unit.Transform.position), Vector3.up);
+            string animName = angle <= 0 ? "TakeDamageBackward" : "TakeDamageForward";
+            animator.Play(animName);
             yield return waitForTakeDamage;
             animator.SetLayerWeight(takeDamageLayerIndex, 0);
         }

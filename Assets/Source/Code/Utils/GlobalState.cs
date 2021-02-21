@@ -16,6 +16,8 @@ namespace Source.Code.Utils
             GameEnded
         }
 
+        private Transform cameraBorders;
+
         private UnitSpawner unitSpawner;
         private SessionSettings sessionSettings;
         private SessionSetup setupSettings;
@@ -112,18 +114,17 @@ namespace Source.Code.Utils
 
         private SessionSettings sessionSettings;
         private PlayerInputSystem inputSystem;
-        private VirtualCamera virtualCamera;
 
         public LocalStates Current { get; private set; } = LocalStates.Spectator;
+        public event Action<LocalStates> StateChanged;
 
-        public LocalState(GlobalState globalState, PlayerInputSystem inputSystem, VirtualCamera virtualCamera)
+        public LocalState(GlobalState globalState, PlayerInputSystem inputSystem)
         {
             sessionSettings = SessionSettings.Instance;
             globalState.GlobalStateChanged += OnGlobalStateChanged;
             sessionSettings.ControlledUnitSet += OnControlledUnitSet;
 
             this.inputSystem = inputSystem;
-            this.virtualCamera = virtualCamera;
         }
 
         private void OnGlobalStateChanged(GlobalState.GlobalStates currentGlobalState)
@@ -147,6 +148,7 @@ namespace Source.Code.Utils
             ExitState();
             Current = state;
             EnterState();
+            StateChanged?.Invoke(Current);
         }
 
         private void ExitState()

@@ -58,9 +58,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 19.53, z: -6.88}
-  m_XDamping: 4
-  m_YDamping: 4
-  m_ZDamping: 4
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -111,6 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vcam: {fileID: 9188110438436774979}
+  confiner: {fileID: 6918219141827182251}
+  cameraBordersPrefab: {fileID: 7118610837890060742, guid: 3280dd2dd9d2bbf4cbbe8fd74aeda5d4,
+    type: 3}
 --- !u!1 &9188110438436774978
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9188110438436774976}
   - component: {fileID: 9188110438436774979}
+  - component: {fileID: 6918219141827182251}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -178,3 +182,20 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 9188110438345212870}
+--- !u!114 &6918219141827182251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188110438436774978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fba25a5cd15594e8f050a11e386c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ConfineMode: 1
+  m_BoundingVolume: {fileID: 0}
+  m_BoundingShape2D: {fileID: 0}
+  m_ConfineScreenEdges: 1
+  m_Damping: 0
