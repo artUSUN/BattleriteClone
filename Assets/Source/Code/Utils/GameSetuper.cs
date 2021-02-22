@@ -73,10 +73,10 @@ namespace Source.Code.Utils
         [SerializeField] private PlayerSettings[] players;
         [Header("Game settings")]
         [SerializeField] private float respawnDurationInSec = 5f;
-        [SerializeField] private float matchDurationInSec = 300f;
+        [SerializeField] private int matchDurationInSec = 300;
 
         public PlayerSettings[] Players => players;
         public float RespawnDuration => respawnDurationInSec;
-        public float MatchDuration => matchDurationInSec;
+        public int MatchDuration => matchDurationInSec;
     }
 }

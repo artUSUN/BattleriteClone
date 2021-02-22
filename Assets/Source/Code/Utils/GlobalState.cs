@@ -1,5 +1,4 @@
-﻿using Source.Code.Cam;
-using Source.Code.PlayerInput;
+﻿using Source.Code.PlayerInput;
 using Source.Code.Units;
 using System;
 using System.Collections;
@@ -68,7 +67,7 @@ namespace Source.Code.Utils
 
         public static Timer New(float duration, Transform parent)
         {
-            var newGO = new GameObject();
+            var newGO = new GameObject("Timer");
             newGO.transform.SetParent(parent);
             var timer = newGO.AddComponent<Timer>();
             timer.Duration = duration;
@@ -91,7 +90,7 @@ namespace Source.Code.Utils
             Time = 0;
             TimeBeforeEnd = Duration;
 
-            while (Time >= Duration)
+            while (Time < Duration)
             {
                 Time += UnityEngine.Time.deltaTime;
                 TimeBeforeEnd -= UnityEngine.Time.deltaTime;

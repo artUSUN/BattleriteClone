@@ -29,3 +29,5 @@ MonoBehaviour:
   prefabs:
     unitBar: {fileID: 9200709040939020761, guid: 7b98292a0a6394c46ae9026a90cde7b2,
       type: 3}
+    controlledUnitUnderline: {fileID: 6441602208477837182, guid: c94673746e912074ba055978cf828234,
+      type: 3}

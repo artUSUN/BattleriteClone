@@ -49,7 +49,7 @@ MonoBehaviour:
   healPower: 50
   checkerRadius: 1
   checkerCenter: {fileID: 5674099867624632523}
-  unitHealedFX: {fileID: 8570576854050604197, guid: 24f6e694a88e4744e9c707c359cfed7a,
+  unitHealedFX: {fileID: 4215354810564194697, guid: a52eb80c227dd5444b799950070a6b62,
     type: 3}
   destroyFXDelay: 1.5
 --- !u!1 &465074428510870172
