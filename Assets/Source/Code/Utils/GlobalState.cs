@@ -40,12 +40,13 @@ namespace Source.Code.Utils
 
         public void StartGame()
         {
+            Current = GlobalStates.Game;
             unitSpawner.InitSpawn(setupSettings);
 
             matchTimer.Ended += EndGame;
             matchTimer.Play();
 
-            Current = GlobalStates.Game;
+
             GlobalStateChanged?.Invoke(Current);
         }
 
@@ -191,6 +192,8 @@ namespace Source.Code.Utils
             if (sessionSettings.GlobalState.Current == GlobalState.GlobalStates.Game)
             {
                 SetLocalState(LocalStates.Player);
+                var controlledUnitUnderline = GlobalSettingsLoader.Load().Prefabs.ControlledUnitUnderline;
+                MonoBehaviour.Instantiate(controlledUnitUnderline, sessionSettings.ControlledUnit.Model);
             }
         }
     }

@@ -50,8 +50,10 @@ namespace Source.Code.Utils
     public class Prefabs
     {
         [SerializeField] private GameObject unitBar;
+        [SerializeField] private GameObject controlledUnitUnderline;
 
         public GameObject UnitBar => unitBar;
+        public GameObject ControlledUnitUnderline => controlledUnitUnderline;
     }
 
 }
