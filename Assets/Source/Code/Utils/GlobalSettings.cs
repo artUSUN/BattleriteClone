@@ -11,7 +11,7 @@ namespace Source.Code.Utils
         [SerializeField] private LayersSettings layers;
         [SerializeField] private Prefabs prefabs;
 
-
+        public const string Version = "0.1";
         public InputSettings Input => input;
         public CameraSettigns Camera => camera;
         public LayersSettings Layers => layers;
