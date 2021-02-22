@@ -26,16 +26,39 @@ namespace Source.Code.Utils
         }
         #endregion
 
+        #region Local player
         public int CurrentPlayerID { get; private set; } = -1;
         public Unit ControlledUnit { get; private set; }
+        #endregion
+
+        #region Factions
         public Faction[] Factions { get; private set; }
+        public LayerMask AllFactionLayers
+        {
+            get
+            {
+                if (allFactionLayers == default)
+                {
+                    foreach (var faction in SessionSettings.Instance.Factions)
+                    {
+                        allFactionLayers += 1 << faction.Layer;
+                    }
+                    if (allFactionLayers == default) Debug.LogError("allFactionLayers is default");
+                }
+                return allFactionLayers;
+            }
+        }
+        #endregion
+
         public Quaternion CamRotation { get; set; }
+
         public SessionSetup SetupSettings { get; private set; }
         public GlobalState GlobalState { get; private set; }
         public LocalState LocalState { get; private set; }
 
+        #region Events
         public event Action<Unit> ControlledUnitSet;
-
+        #endregion 
 
         public void SetControlledUnit(Unit unit)
         {
@@ -85,5 +108,7 @@ namespace Source.Code.Utils
             GlobalState = globalState;
             LocalState = localState;
         }
+
+        private LayerMask allFactionLayers;
     }
 }

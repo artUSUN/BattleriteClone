@@ -50,6 +50,20 @@ namespace Source.Code.Units.Components
             TakedDamage?.Invoke(fromPoint, fromUnit);
         }
 
+        public void ApplyHeal(float value)
+        {
+            if (value < 0)
+            {
+                Debug.Log("Heal cannot be less than 0");
+                return;
+            }
+
+            CurrentHP += value;
+            if (CurrentHP > maxHP) CurrentHP = maxHP;
+
+            HealthIncreased?.Invoke(CurrentHP);
+        }
+
         private void Death(Unit from)
         {
             if (isDied) return;
