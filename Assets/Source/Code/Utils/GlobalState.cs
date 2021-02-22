@@ -83,7 +83,7 @@ namespace Source.Code.Utils
             factionsSortedByScore.Reverse();
 
             inputSystem.gameObject.SetActive(false);
-            matchTimer.Stop();
+            matchTimer.Pause();
 
             GlobalStateChanged?.Invoke(Current);
         }

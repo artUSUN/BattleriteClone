@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Source/Scenes/Main Menu.unity
     guid: 6354aaaadc38b21439eb2638edee1b0c
   - enabled: 1
-    path: Assets/Source/Scenes/Connecting Scene.unity
+    path: Assets/Source/Scenes/ConnectionScene.unity
     guid: 30ca48532ef0ed54ba74e1d5bab7dfa4
   m_configObjects: {}
