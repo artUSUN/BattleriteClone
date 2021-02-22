@@ -2,64 +2,101 @@
 using Source.Code.Units;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Source.Code.Utils
 {
     public class GlobalState
     {
-        public enum GlobalStates
+        public enum States
         {
             PreGame,
             Game,
             GameEnded
         }
 
-        private Transform cameraBorders;
-
         private UnitSpawner unitSpawner;
         private SessionSettings sessionSettings;
         private SessionSetup setupSettings;
+        private PlayerInputSystem inputSystem;
         private Transform systemsRoot;
         private Timer matchTimer;
 
+        public List<Faction> factionsSortedByScore = new List<Faction>();
         public float MatchTime => matchTimer.Time;
-        public GlobalStates Current { get; private set; } = GlobalStates.PreGame;
+        public States Current { get; private set; } = States.PreGame;
 
-        public event Action<GlobalStates> GlobalStateChanged;
 
-        public GlobalState(UnitSpawner unitSpawner, SessionSetup setupSettings, Transform systems)
+        public event Action<States> GlobalStateChanged;
+
+        public GlobalState(UnitSpawner unitSpawner, SessionSetup setupSettings, Transform systems, PlayerInputSystem inputSystem)
         {
             this.unitSpawner = unitSpawner;
             this.setupSettings = setupSettings;
+            this.inputSystem = inputSystem;
             systemsRoot = systems;
             sessionSettings = SessionSettings.Instance;
             matchTimer = Timer.New(setupSettings.MatchDuration, systemsRoot);
         }
 
+        public void PreStartGame()
+        {
+            unitSpawner.InitSpawn(setupSettings);
+
+            //temp 
+            StartGame();
+        }
+
         public void StartGame()
         {
-            Current = GlobalStates.Game;
-            unitSpawner.InitSpawn(setupSettings);
+            if (Current != States.PreGame)
+            {
+                Debug.LogError($"Try switch to Game State when in {Current} State");
+                return;
+            }
+
+            Current = States.Game;
+
+            foreach (var faction in sessionSettings.Factions) faction.ScoresChanged += CheckScores;
 
             matchTimer.Ended += EndGame;
             matchTimer.Play();
-
 
             GlobalStateChanged?.Invoke(Current);
         }
 
         public void EndGame()
         {
+            if (Current != States.Game)
+            {
+                Debug.LogError($"Try switch to EndGame State when in {Current} State");
+                return;
+            }
+
             matchTimer.Ended -= EndGame;
 
+            Current = States.GameEnded;
 
+            factionsSortedByScore.AddRange(sessionSettings.Factions);
+            factionsSortedByScore.Sort();
+            factionsSortedByScore.Reverse();
+
+            inputSystem.gameObject.SetActive(false);
+            matchTimer.Stop();
+
+            GlobalStateChanged?.Invoke(Current);
+        }
+
+        private void CheckScores(int score)
+        {
+            if (score >= setupSettings.ScoresToWin) EndGame();
         }
     }
 
     public class Timer : MonoBehaviour
     {
-        public float Time { get; private set; }
+        public float Time { get; private set; } = 0;
         public float TimeBeforeEnd { get; private set; }
         public float Duration { get; private set; }
 
@@ -85,10 +122,21 @@ namespace Source.Code.Utils
             StartCoroutine(TimerCoroutine());
         }
 
-        private IEnumerator TimerCoroutine()
+        public void Pause()
         {
+            StopAllCoroutines();
+        }
+
+        public void Stop()
+        {
+            StopAllCoroutines();
             Time = 0;
             TimeBeforeEnd = Duration;
+        }
+
+        private IEnumerator TimerCoroutine()
+        {
+            TimeBeforeEnd = Duration - Time;
 
             while (Time < Duration)
             {
@@ -127,16 +175,19 @@ namespace Source.Code.Utils
             this.inputSystem = inputSystem;
         }
 
-        private void OnGlobalStateChanged(GlobalState.GlobalStates currentGlobalState)
+        private void OnGlobalStateChanged(GlobalState.States currentGlobalState)
         {
             switch (currentGlobalState)
             {
-                case GlobalState.GlobalStates.Game:
+                case GlobalState.States.Game:
                     {
                         SetLocalState(LocalStates.Player);
                     }
                     break;
-                case GlobalState.GlobalStates.GameEnded:
+                case GlobalState.States.GameEnded:
+                    {
+
+                    }
                     break;
                 default:
                     break;
@@ -188,7 +239,7 @@ namespace Source.Code.Utils
 
         private void OnControlledUnitSet(Unit unit)
         {
-            if (sessionSettings.GlobalState.Current == GlobalState.GlobalStates.Game)
+            if (sessionSettings.GlobalState.Current == GlobalState.States.Game)
             {
                 SetLocalState(LocalStates.Player);
                 var controlledUnitUnderline = GlobalSettingsLoader.Load().Prefabs.ControlledUnitUnderline;

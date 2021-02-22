@@ -5,28 +5,34 @@ using UnityEngine;
 
 namespace Source.Code.Utils
 {
-    public class Faction
+    public class Faction : IComparable<Faction>
     {
-        private UnitSpawner unitSpawner;
+        public int Scores { get; private set; }
 
-        public int Index { get; private set; }
+        public int ID { get; private set; }
         public int Layer { get; private set; }
         public LayerMask EnemiesLayers { get; private set; }
+        public int AliveUnitsCount => units.Count;
+
+
+        public event Action<Unit, Unit> UnitDied;
+        public event Action<int> ScoresChanged;
 
 
         private Dictionary<int, Unit> units; //Player id, Unit
+        private readonly UnitSpawner unitSpawner;
+        private readonly SessionSettings sessionSettings;
 
         public Faction(Dictionary<int, Unit> units, UnitSpawner unitSpawner)
         {
             this.units = units;
             this.unitSpawner = unitSpawner;
+            sessionSettings = SessionSettings.Instance;
         }
 
         public void Initialize(int index)
         {
-            Index = index;
-
-            var sessionSettings = SessionSettings.Instance;
+            ID = index;
 
             Layer = 20 + index;
             int enemiesLayers = 0;
@@ -47,6 +53,11 @@ namespace Source.Code.Utils
             }
         }
 
+        public int CompareTo(Faction f)
+        {
+            return this.Scores.CompareTo(f.Scores);
+        }
+
         public void AddUnit(Unit unit)
         {
             if (units.ContainsKey(unit.OwnerPlayerID))
@@ -57,6 +68,20 @@ namespace Source.Code.Utils
             units.Add(unit.OwnerPlayerID, unit);
             unit.gameObject.layer = Layer;
             unit.HealthComponent.Died += OnUnitDied;
+        }
+
+        public void AddScore(int count)
+        {
+            if (sessionSettings.GlobalState.Current != GlobalState.States.Game) return;
+
+            if (count < 0)
+            {
+                Debug.LogError($"Can't add to Faction {ID} less than zero coins.");
+                return;
+            }
+
+            Scores += count;
+            ScoresChanged?.Invoke(Scores);
         }
 
         private void RemoveUnit(Unit unit)
@@ -71,9 +96,16 @@ namespace Source.Code.Utils
 
         private void OnUnitDied(Unit who, Unit from)
         {
+            UnitDied?.Invoke(who, from);
             RemoveUnit(who);
-            var players = SessionSettings.Instance.SetupSettings.Players;
+            var players = sessionSettings.SetupSettings.Players;
             var playerSettings = Array.Find(players, p => p.PlayerID == who.OwnerPlayerID);
+
+            if (from != null)
+            {
+                from.Faction.AddScore(sessionSettings.SetupSettings.ScoresFromKill);
+            }
+
             unitSpawner.RespawnUnit(playerSettings);
         }
     }

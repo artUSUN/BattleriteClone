@@ -27,7 +27,6 @@ namespace Source.Code.UI
 
         private void SetTime(int time)
         {
-            Debug.Log("Changed");
             string formatedTime = $"{time/60, 0:d2}:{time%60, 0:d2}";
             timerTMP.text = formatedTime;
         }

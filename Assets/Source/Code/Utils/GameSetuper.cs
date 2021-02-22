@@ -1,5 +1,6 @@
 ﻿using Source.Code.Cam;
 using Source.Code.PlayerInput;
+using Source.Code.UI;
 using System;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Source.Code.Utils
         [Header("System links")]
         [SerializeField] private Transform systemsRoot;
         [SerializeField] private UnitSpawner unitSpawner;
+        [SerializeField] private GameUIWindowsSwitcher uiSwitcher;
         [Header("Manual setup")]
         [SerializeField] private SessionSetup manualSetupSettings;
 
@@ -30,14 +32,15 @@ namespace Source.Code.Utils
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
 
-            var globalState = new GlobalState(unitSpawner, setupSettings, systemsRoot);
+            var globalState = new GlobalState(unitSpawner, setupSettings, systemsRoot, inputSystem);
             var localState = new LocalState(globalState, inputSystem);
             sessionSettings.SetGameStates(globalState, localState);
 
+            uiSwitcher.Initialize();
 
             var virtualCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
             //TEMP
-            globalState.StartGame();
+            globalState.PreStartGame();
             //-----------------------------------
         }
 
@@ -74,9 +77,13 @@ namespace Source.Code.Utils
         [Header("Game settings")]
         [SerializeField] private float respawnDurationInSec = 5f;
         [SerializeField] private int matchDurationInSec = 300;
+        [SerializeField] private int scoresToWin = 50;
+        [SerializeField] private int scoresFromKill = 1;
 
         public PlayerSettings[] Players => players;
         public float RespawnDuration => respawnDurationInSec;
         public int MatchDuration => matchDurationInSec;
+        public int ScoresToWin => scoresToWin;
+        public int ScoresFromKill => scoresFromKill;
     }
 }
