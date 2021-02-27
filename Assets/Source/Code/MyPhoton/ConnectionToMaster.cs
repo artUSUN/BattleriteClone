@@ -50,6 +50,8 @@ namespace Source.Code.MyPhoton
             debugTMP.text = text;
             debugTMP.color = Color.green;
 
+            connectButton.interactable = false;
+            
             afterConnectedCanvas.gameObject.SetActive(true);
 
             ConnectedToMaster?.Invoke();

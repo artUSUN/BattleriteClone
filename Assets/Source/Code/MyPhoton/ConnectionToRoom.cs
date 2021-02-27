@@ -1,5 +1,8 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,6 +55,19 @@ namespace Source.Code.MyPhoton
             Debug.LogError(debugText);
             debugTMP.text = debugText;
             debugTMP.color = Color.red;
+        }
+
+        public override void OnJoinedRoom()
+        {
+            SetCustomProperties();
+
+            PhotonNetwork.LoadLevel("Room");
+        }
+
+        private void SetCustomProperties()
+        {
+            Hashtable props = new Hashtable { { GlobalConst.PLAYER_LOADED_LEVEL, false } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
     }
 }
