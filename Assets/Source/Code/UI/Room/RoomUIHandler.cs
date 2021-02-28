@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Source.Code.MyPhoton;
 using Source.Code.MyPhoton.Room;
 using TMPro;
 using UnityEngine;
@@ -8,28 +9,52 @@ namespace Source.Code.UI.Room
 {
     public class RoomUIHandler : MonoBehaviour
     {
-        private RoomMainHandler roomMainHandler;
-
-        [SerializeField] private Button playButton;
+        [Header("Other UI handlers")]
+        [SerializeField] private SettingsUI settingsUI;
+        [SerializeField] private StartTimer timer;
+        [Header("Buttons")]
         [SerializeField] private Button readyButton;
+        [SerializeField] private StartMatchButton startButton;
 
         private bool isPlayerReady = false;
+        private RoomMainHandler roomMainHandler;
+
+        public StartTimer StartTimer => timer;
+
 
         public void Initialize(RoomMainHandler roomMainHandler, bool isMaster)
         {
             this.roomMainHandler = roomMainHandler;
 
-            if (isMaster)
+            CheckPlayersCount();
+
+            if (isMaster) EnableStartButton();
+            else EnableReadyButton();
+
+            settingsUI.Initialize(isMaster);
+        }
+
+        public void OnPlayerReady()
+        {
+            if (PhotonNetwork.IsMasterClient)
             {
-                readyButton.gameObject.SetActive(false);
-                playButton.gameObject.SetActive(true);
-                //ui elements interactive = true
+                CheckPlayersCount();
             }
-            else
+        }
+
+        public void OnStayMasterClient()
+        {
+            EnableStartButton();
+            CheckPlayersCount();
+            settingsUI.SetFieldsInteractable(true);
+        }
+
+        public void OnPlayerLeave()
+        {
+            if (PhotonNetwork.IsMasterClient)
             {
-                readyButton.gameObject.SetActive(true);
-                playButton.gameObject.SetActive(false);
-                SetReadyButton(false);
+                CheckPlayersCount();
+                settingsUI.SetFieldsInteractable(true);
             }
         }
 
@@ -38,22 +63,73 @@ namespace Source.Code.UI.Room
             PhotonNetwork.LeaveRoom();
         }
 
-        public void OnPlayButton()
+        public void OnStartButton()
         {
-
+            if (CheckPlayersCount())
+            {
+                settingsUI.SetFieldsInteractable(false);
+                roomMainHandler.OnMatchButtonClicked();
+            }
         }
 
         public void OnReadyButton()
         {
             isPlayerReady = !isPlayerReady;
             roomMainHandler.SetPlayerReady(isPlayerReady);
-            SetReadyButton(isPlayerReady);
+            SetReadyButtonState(isPlayerReady);
         }
 
-        private void SetReadyButton(bool isReady)
+        private void EnableStartButton()
+        {
+            startButton.gameObject.SetActive(true);
+            readyButton.gameObject.SetActive(false);
+        }
+
+        private void EnableReadyButton()
+        {
+            startButton.gameObject.SetActive(false);
+            readyButton.gameObject.SetActive(true);
+        }
+
+        private void SetReadyButtonState(bool isReady)
         {
             readyButton.GetComponent<Image>().color = isReady ? Color.green : Color.red;
-            readyButton.GetComponentInChildren<TextMeshProUGUI>().text = isReady ? "Ready" : "Ready?";
+            readyButton.GetComponentInChildren<TextMeshProUGUI>().text = isReady ? "Ready!" : "Ready?";
+        }
+
+        private bool CheckPlayersCount()
+        {
+            if (startButton.gameObject.activeSelf == false) return false;
+
+            var players = PhotonNetwork.PlayerList;
+
+            if (players.Length == 1)
+            {
+                startButton.SetState(StartMatchButton.ButtonStates.NotEnoughPlayers);
+                return false;
+            }
+
+            int countOfReadyPlayers = 0;
+
+            foreach (var player in players)
+            {
+                if (player.CustomProperties.TryGetValue(GlobalConst.PLAYER_READY, out object isReady))
+                {
+                    if ((bool)isReady) countOfReadyPlayers++;
+                }
+            }
+
+            if (countOfReadyPlayers == players.Length)
+            {
+                startButton.SetState(StartMatchButton.ButtonStates.AllPlayersReady);
+                return true;
+            }
+            else
+            {
+                startButton.SetState(StartMatchButton.ButtonStates.WaitingForPlayers);
+                startButton.SetCountOfWaitingPlayers(countOfReadyPlayers, players.Length);
+                return false;
+            }
         }
     }
 }

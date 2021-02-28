@@ -1,8 +1,11 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Source.Code.Extensions;
 using Source.Code.MyPhoton;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Source.Code.UI.Room
@@ -11,11 +14,8 @@ namespace Source.Code.UI.Room
     {
         [SerializeField] private RectTransform[] cardPlaces;
         [SerializeField] private GameObject cardPrefab;
-        [SerializeField] private Transform cardRoot;
 
         private readonly Dictionary<int, PlayerCard> cards = new Dictionary<int, PlayerCard>(); //playerID, playerCard
-
-        public RectTransform[] CardPlaces => cardPlaces;
 
         public void Initialize(Player[] players)
         {
@@ -63,10 +63,11 @@ namespace Source.Code.UI.Room
             {
                 card.SetHostCrownActive(false);
             }
+            SetCardState(card, cardOwner);
             cards.Add(cardOwner.ActorNumber, card);
         }
 
-        public void OnPlayerLeaved(int playerID)
+        public void OnPlayerLeave(int playerID)
         {
             Destroy(cards[playerID].gameObject);
             cards.Remove(playerID);
@@ -79,14 +80,6 @@ namespace Source.Code.UI.Room
                 ChangeCardPlace(card, newPosition);
             }
             else CreateNewCard(player, newPosition);
-        }
-
-        public void OnPlayerLoadedGame(Player player)
-        {
-            if (cards.TryGetValue(player.ActorNumber, out PlayerCard card))
-            {
-                card.SetState(PlayerCard.States.LoadedNotReady);
-            }
         }
 
         public void SetPlayerReady(Player player, bool isReady)
@@ -106,10 +99,80 @@ namespace Source.Code.UI.Room
             }
         }
 
+        public void SwapCards(PlayerCard firstCard, PlayerCard secondCard)
+        {
+            int firstCardNewPlace = secondCard.PlaceID;
+            int secondCardNewPlace = firstCard.PlaceID;
+
+            Hashtable props = new Hashtable { { GlobalConst.PLAYER_CARD_POSITION_ID, firstCardNewPlace } };
+            firstCard.Owner.SetCustomProperties(props);
+            props = new Hashtable { { GlobalConst.PLAYER_CARD_POSITION_ID, secondCardNewPlace } };
+            secondCard.Owner.SetCustomProperties(props);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                ChangeCardPlace(firstCard, firstCardNewPlace);
+                ChangeCardPlace(secondCard, secondCardNewPlace);
+            }
+        }
+
+        public bool SetNewCardPlace(PlayerCard card, RectTransform newCardPlace)
+        {
+            if (cardPlaces.Contains(newCardPlace))
+            {
+                int newCardPlaceID = Array.IndexOf(cardPlaces, newCardPlace);
+
+                if (card.Owner.CustomProperties.TryGetValue(GlobalConst.PLAYER_CARD_POSITION_ID, out object currentPos))
+                {
+                    if ((int)currentPos == newCardPlaceID) return false;
+                }
+
+                Hashtable props = new Hashtable { { GlobalConst.PLAYER_CARD_POSITION_ID, newCardPlaceID } };
+                card.Owner.SetCustomProperties(props);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    ChangeCardPlace(card, newCardPlaceID);
+                }
+
+                return true;
+            }
+            else
+            {
+                Debug.LogError($"Card places doesn't contains {newCardPlace.name}", newCardPlace.transform);
+                return false;
+            }
+        }
+
+        public int GetPlayerFaction(Player player)
+        {
+            player.CustomProperties.TryGetValue(GlobalConst.PLAYER_CARD_POSITION_ID, out object playerPlaceID);
+            return (int)playerPlaceID < 3 ? 0 : 1;
+        }
+
         private void ChangeCardPlace(PlayerCard card, int newPlace)
         {
-            card.Transform.SetParent(cardPlaces[newPlace]);
-            card.PlaceID = newPlace;
+            card.ChangePlace(newPlace, cardPlaces[newPlace]);
+        }
+
+        private void SetCardState(PlayerCard card, Player player)
+        {
+            bool isLoaded = PhotonExtensions.GetValueOrReturnDefault<bool>(player.CustomProperties, GlobalConst.PLAYER_LOADED_LEVEL);
+            bool isReady = PhotonExtensions.GetValueOrReturnDefault<bool>(player.CustomProperties, GlobalConst.PLAYER_READY);
+
+            if (!isLoaded)
+            {
+                card.SetState(PlayerCard.States.NotLoaded);
+            }
+            else if (!isReady)
+            {
+                card.SetState(PlayerCard.States.LoadedNotReady);
+            }
+            else
+            {
+                card.SetState(PlayerCard.States.Ready);
+            }
         }
     }
+
 }

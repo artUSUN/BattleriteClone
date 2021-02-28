@@ -99,7 +99,7 @@ namespace Source.Code.Utils
             UnitDied?.Invoke(who, from);
             RemoveUnit(who);
             var players = sessionSettings.SetupSettings.Players;
-            var playerSettings = Array.Find(players, p => p.PlayerID == who.OwnerPlayerID);
+            var playerSettings = Array.Find(players, p => p.PlayerOrdinalID == who.OwnerPlayerID);
 
             if (from != null)
             {

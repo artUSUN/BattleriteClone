@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Source.Code.Extensions;
 using Source.Code.UI.Room;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,9 @@ namespace Source.Code.MyPhoton.Room
     {
         [SerializeField] private RoomCardSystem cardSystem;
         [SerializeField] private RoomUIHandler uiHandler;
+        [SerializeField] private CardDragger cardDragger;
+        [Header("Plug")]
+        [SerializeField] private GameObject plugUnitPrefab;
 
         private Player[] players;
 
@@ -27,25 +31,17 @@ namespace Source.Code.MyPhoton.Room
                 RoomCardSystem.SetAvailableCardPlace(PhotonNetwork.LocalPlayer);
                 MasterClientActions();
             }
+            else
+            {
+                cardDragger.enabled = false;
+            }
+
+            uiHandler.StartTimer.TimerEnded += OnStartTimerEnded;
 
             cardSystem.Initialize(players);
-            
-
-            //players[0].GetPlayerNumber
-
-            //if (PhotonNetwork.IsMasterClient)
-            //{
-            //    cardSystem.InitializeOnMaster();
-            //    MasterClientActions();
-            //}
-            //else
-            //{
-            //    cardSystem.Initialize(players);
-            //}
-
-
-
         }
+
+
 
         private void Start()
         {
@@ -53,17 +49,39 @@ namespace Source.Code.MyPhoton.Room
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
-        public void OnPlayButton()
+        public override void OnEnable()
         {
-            
+            base.OnEnable();
+            PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
         }
 
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+            uiHandler.StartTimer.TimerEnded -= OnStartTimerEnded;
+        }
+
+        private void OnEvent(EventData photonEvent)
+        {
+            byte eventCode = photonEvent.Code;
+            if (eventCode == GlobalConst.ROOM_START_MATCH_BEGIN)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    cardDragger.enabled = false;
+
+                }
+                uiHandler.StartTimer.Play();
+            }
+        }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 MasterClientActions();
+                uiHandler.OnStayMasterClient();
             }
             cardSystem.OnMasterClientChanged(newMasterClient);
         }
@@ -79,35 +97,58 @@ namespace Source.Code.MyPhoton.Room
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            cardSystem.OnPlayerLeaved(otherPlayer.ActorNumber);
+            if (PhotonNetwork.CurrentRoom.IsOpen == false)
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = true;
+                cardDragger.enabled = true;
+            }
+            uiHandler.StartTimer.Stop();
+            cardSystem.OnPlayerLeave(otherPlayer.ActorNumber);
+            uiHandler.OnPlayerLeave();
         }
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             if (changedProps.TryGetValue(GlobalConst.PLAYER_CARD_POSITION_ID, out object newPosition))
             {
-                cardSystem.OnCardPositionChanged(targetPlayer, (int)newPosition);
+                int newPosID = (int)newPosition;
+                cardSystem.OnCardPositionChanged(targetPlayer, newPosID);
             }
 
-            if (changedProps.TryGetValue(GlobalConst.PLAYER_LOADED_LEVEL, out object isLoaded))
-            {
-                if ((bool)isLoaded)
-                {
-                    cardSystem.OnPlayerLoadedGame(targetPlayer);
-                }
-            }
+            CheckPlayerLoaded(targetPlayer, changedProps);
 
-            if (changedProps.TryGetValue(GlobalConst.PLAYER_READY, out object isReady))
+            if (changedProps.TryGetValue(GlobalConst.PLAYER_READY, out object isReadyProperty))
             {
-                cardSystem.SetPlayerReady(targetPlayer, (bool)isReady);
+                bool isReady = (bool)isReadyProperty;
+                uiHandler.OnPlayerReady();
+                cardSystem.SetPlayerReady(targetPlayer, isReady);
             }
         }
 
+        public void OnMatchButtonClicked()
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+
+            var players = PhotonNetwork.PlayerList;
+
+            foreach (var player in players)
+            {
+                int factionID = cardSystem.GetPlayerFaction(player);
+
+                Hashtable props = new Hashtable { { GlobalConst.PLAYER_FACTION, factionID } };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+                props = new Hashtable { { GlobalConst.PLAYER_UNIT_PREFAB_NAME, plugUnitPrefab.name } };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            }
+
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(GlobalConst.ROOM_START_MATCH_BEGIN, null, raiseEventOptions, SendOptions.SendReliable);
+        }
+
+
         public override void OnLeftRoom()
         {
-            Hashtable props = new Hashtable { { GlobalConst.PLAYER_READY, false } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
             SceneManager.LoadScene(1);
         }
 
@@ -117,9 +158,32 @@ namespace Source.Code.MyPhoton.Room
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
+        private void OnStartTimerEnded()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("LoadLevel 3");
+                //PhotonNetwork.LoadLevel(3);
+            }
+        }
+
+        private void CheckPlayerLoaded(Player targetPlayer, Hashtable changedProps)
+        {
+            if (changedProps.TryGetValue(GlobalConst.PLAYER_LOADED_LEVEL, out object isLoaded))
+            {
+                if ((bool)isLoaded)
+                {
+                    bool isReady = PhotonExtensions.GetValueOrReturnDefault<bool>(targetPlayer.CustomProperties, GlobalConst.PLAYER_READY);
+
+                    cardSystem.SetPlayerReady(targetPlayer, isReady);
+                }
+            }
+        }
+
         private void MasterClientActions()
         {
             //set cards and settings fields interactive
+            cardDragger.enabled = true;
 
             Hashtable props = new Hashtable { { GlobalConst.PLAYER_READY, true } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);

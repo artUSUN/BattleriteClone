@@ -62,13 +62,13 @@ namespace Source.Code.Utils
 
                 for (int j = 0; j < unitsByFaction[i].Count; j++)
                 {
-                    spawnPointsByPlayerID.Add(unitsByFaction[i][j].PlayerID, spawnPoints[i].Points[j]);
+                    spawnPointsByPlayerID.Add(unitsByFaction[i][j].PlayerOrdinalID, spawnPoints[i].Points[j]);
 
                     var newUnitTransform = 
                         Instantiate(unitsByFaction[i][j].UnitPrefab, spawnPoints[i].Points[j].position, spawnPoints[i].Points[j].rotation, factionsRoot[i]).transform;
                     var unitScript = newUnitTransform.GetComponentInChildren<Unit>();
-                    createdUnits.Add(unitsByFaction[i][j].PlayerID, unitScript);
-                    if (unitsByFaction[i][j].PlayerID == sessionSettings.CurrentPlayerID)
+                    createdUnits.Add(unitsByFaction[i][j].PlayerOrdinalID, unitScript);
+                    if (unitsByFaction[i][j].PlayerOrdinalID == sessionSettings.CurrentPlayerID)
                     {
                         if (unitScript == null) Debug.LogError("Unit is null", transform);
                         else sessionSettings.SetControlledUnit(unitScript);
@@ -83,7 +83,7 @@ namespace Source.Code.Utils
 
         public void RespawnUnit(PlayerSettings playerSettings)
         {
-            Debug.Log("Respawn unit " + playerSettings.PlayerID);
+            Debug.Log("Respawn unit " + playerSettings.PlayerOrdinalID);
             StartCoroutine(RespawnCoroutine(playerSettings));
         }
 
@@ -96,15 +96,15 @@ namespace Source.Code.Utils
 
             yield return respawnWaiter;
 
-            var spawnPoint = spawnPointsByPlayerID[playerSettings.PlayerID];
+            var spawnPoint = spawnPointsByPlayerID[playerSettings.PlayerOrdinalID];
 
             var newUnitTransform =
                 Instantiate(playerSettings.UnitPrefab, spawnPoint.position, spawnPoint.rotation, factionsRoot[playerSettings.FactionID]).transform;
             var unitScript = newUnitTransform.GetComponentInChildren<Unit>();
-            unitScript.Initialize(sessionSettings.Factions[playerSettings.FactionID], playerSettings.PlayerID);
+            unitScript.Initialize(sessionSettings.Factions[playerSettings.FactionID], playerSettings.PlayerOrdinalID);
 
             sessionSettings.Factions[playerSettings.FactionID].AddUnit(unitScript);
-            if (sessionSettings.CurrentPlayerID == playerSettings.PlayerID) sessionSettings.SetControlledUnit(unitScript);
+            if (sessionSettings.CurrentPlayerID == playerSettings.PlayerOrdinalID) sessionSettings.SetControlledUnit(unitScript);
         }
     }
 

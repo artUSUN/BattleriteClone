@@ -1,7 +1,9 @@
-﻿using Source.Code.Cam;
+﻿using Photon.Realtime;
+using Source.Code.Cam;
 using Source.Code.PlayerInput;
 using Source.Code.UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Source.Code.Utils
@@ -66,8 +68,17 @@ namespace Source.Code.Utils
         [SerializeField] private int factionID;
 
         public GameObject UnitPrefab => unitPrefab;
-        public int PlayerID => playerID;
+        public int PlayerOrdinalID => playerID;
+        public Player Owner { get; private set; }
         public int FactionID => factionID;
+
+        public PlayerSettings(Player owner, int playerOrdinalID, int factionID, GameObject unitPrefab)
+        {
+            Owner = owner;
+            playerID = playerOrdinalID;
+            this.factionID = factionID;
+            this.unitPrefab = unitPrefab;
+        }
     }
 
     [Serializable]
@@ -85,5 +96,10 @@ namespace Source.Code.Utils
         public int MatchDuration => matchDurationInSec;
         public int ScoresToWin => scoresToWin;
         public int ScoresFromKill => scoresFromKill;
+
+        public SessionSetup(PlayerSettings[] players, Dictionary<string, float> fieldsSettings)
+        {
+
+        }
     }
 }
