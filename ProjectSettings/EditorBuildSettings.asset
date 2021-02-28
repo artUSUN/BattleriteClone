@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Source/Scenes/Room.unity
     guid: e88cda84e64596f46b069bb5ce5f83e8
+  - enabled: 1
+    path: Assets/Source/Scenes/Test/Battlerite Controller Test.unity
+    guid: 3a743b90b4c480649bc6078bc2b4ed43
   m_configObjects: {}

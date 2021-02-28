@@ -1,5 +1,8 @@
-﻿using Photon.Realtime;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using Source.Code.Cam;
+using Source.Code.Extensions;
+using Source.Code.MyPhoton;
 using Source.Code.PlayerInput;
 using Source.Code.UI;
 using System;
@@ -19,12 +22,16 @@ namespace Source.Code.Utils
 
         private SessionSetup setupSettings;
 
-        private bool setupDone = false;
-
         private void Awake()
         {
-            if (setupSettings == null) setupSettings = manualSetupSettings;
-            else Debug.Log("Found setup settings from last scene");
+            PhotonNetwork.OfflineMode = true;
+
+            if (PhotonNetwork.OfflineMode) setupSettings = manualSetupSettings;
+            else
+            {
+                Debug.Log("Found setup settings from last scene");
+                setupSettings = LoadSetupSettings();
+            }
 
             var sessionSettings = SessionSettings.New(systemsRoot, setupSettings);
 
@@ -46,17 +53,10 @@ namespace Source.Code.Utils
             //-----------------------------------
         }
 
-        public void SetSettings(SessionSetup settings)
+        private SessionSetup LoadSetupSettings()
         {
-            if (setupDone)
-            {
-                Debug.LogError("The settings are already set", transform);
-                return;
-            }
-
-            setupDone = true;
-
-            setupSettings = settings;
+            return null;
+            //return new SessionSetup();
         }
     }
 
@@ -64,21 +64,24 @@ namespace Source.Code.Utils
     public struct PlayerSettings
     {
         [SerializeField] private GameObject unitPrefab;
+        //[SerializeField] private string unitPrefabName;
         [SerializeField] private int playerID;
+        [SerializeField] private int ownerActorNumber;
         [SerializeField] private int factionID;
 
         public GameObject UnitPrefab => unitPrefab;
+        //public string UnitPrefab => unitPrefabName;
         public int PlayerOrdinalID => playerID;
-        public Player Owner { get; private set; }
+        public int OwnerActorNumber => ownerActorNumber;
         public int FactionID => factionID;
 
-        public PlayerSettings(Player owner, int playerOrdinalID, int factionID, GameObject unitPrefab)
-        {
-            Owner = owner;
-            playerID = playerOrdinalID;
-            this.factionID = factionID;
-            this.unitPrefab = unitPrefab;
-        }
+        //public PlayerSettings(int ownerActorNumber, int playerOrdinalID, int factionID, string unitPrefab)
+        //{
+        //    this.ownerActorNumber = ownerActorNumber;
+        //    playerID = playerOrdinalID;
+        //    this.factionID = factionID;
+        //    this.unitPrefabName = unitPrefab;
+        //}
     }
 
     [Serializable]
@@ -97,9 +100,24 @@ namespace Source.Code.Utils
         public int ScoresToWin => scoresToWin;
         public int ScoresFromKill => scoresFromKill;
 
-        public SessionSetup(PlayerSettings[] players, Dictionary<string, float> fieldsSettings)
-        {
+        //public SessionSetup()
+        //{
+        //    var players = PhotonNetwork.PlayerList;
 
-        }
+        //    this.players = new PlayerSettings[players.Length];
+
+        //    for (int i = 0; i < players.Length; i++)
+        //    {
+        //        int factionID = PhotonExtensions.GetValueOrReturnDefault<int>(players[i].CustomProperties, GlobalConst.PLAYER_FACTION); 
+        //        string unitPrefabName = PhotonExtensions.GetValueOrReturnDefault<string>(players[i].CustomProperties, GlobalConst.PLAYER_UNIT_PREFAB_NAME);
+        //        this.players[i] = new PlayerSettings(players[i].ActorNumber, i, factionID, unitPrefabName);
+        //    }
+
+        //    var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+
+        //    if (roomProperties.TryGetValue(GlobalConst.ROOM_MATCH_DURATION, out object matchDuration)) matchDurationInSec = Mathf.RoundToInt((float)matchDuration);
+        //    if (roomProperties.TryGetValue(GlobalConst.ROOM_POINTS_TO_WIN, out object pointsToWin)) scoresToWin = Mathf.RoundToInt((float)pointsToWin);
+        //    if (roomProperties.TryGetValue(GlobalConst.ROOM_UNIT_RESPAWN_DURATION, out object unitRespDuration)) respawnDurationInSec = (float)unitRespDuration;
+        //}
     }
 }

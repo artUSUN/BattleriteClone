@@ -34,6 +34,14 @@ namespace Source.Code.UI.Room
             settingsUI.Initialize(isMaster);
         }
 
+        public void OnPlayerEntered()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                CheckPlayersCount();
+            }
+        }
+
         public void OnPlayerReady()
         {
             if (PhotonNetwork.IsMasterClient)

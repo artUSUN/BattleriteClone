@@ -93,6 +93,7 @@ namespace Source.Code.MyPhoton.Room
             {
                 RoomCardSystem.SetAvailableCardPlace(enteredPlayer);
             }
+            uiHandler.OnPlayerEntered();
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
