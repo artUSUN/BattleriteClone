@@ -1,4 +1,5 @@
-﻿using Source.Code.Units.Bars;
+﻿using Photon.Pun;
+using Source.Code.Units.Bars;
 using Source.Code.Utils;
 using System;
 using UnityEngine;
@@ -16,11 +17,12 @@ namespace Source.Code.Units.Components
 
         public float CurrentHP { get; private set; }
         public float CurrentHPInPercent => CurrentHP / maxHP;
+        public bool IsAlive => !isDied;
 
         public event Action<float> HealthReduced;
         public event Action<float> HealthIncreased;
         public event Action<Vector3, Unit> TakedDamage;
-        public event Action<Unit, Unit> Died;
+        public event Action<Unit> Died;
 
         public void Initialize(Unit unit)
         {
@@ -28,7 +30,16 @@ namespace Source.Code.Units.Components
             this.unit = unit;
             CurrentHP = maxHP;
             hpBar = Instantiate(globalSettings.Prefabs.UnitBar, hpBarPlace.position, Quaternion.Euler(70, 0, 0), unit.Transform).GetComponent<HPBar>();
-            hpBar.Initialize(this);
+            hpBar.Initialize(this, unit);
+        }
+
+        private void OnDisable()
+        {
+            Debug.Log("On Disable in Health Component");
+            if (SessionSettings.Instance.ControlledUnit != unit)
+            {
+                Died?.Invoke(unit);
+            }
         }
 
         public void ApplyDamage(float value, Vector3 fromPoint, Unit fromUnit)
@@ -68,8 +79,19 @@ namespace Source.Code.Units.Components
         {
             if (isDied) return;
             isDied = true;
-            Died?.Invoke(unit, from);
-            Destroy(unit.gameObject);
+
+            if (from != null)
+            {
+                from.Faction.AddScore(SessionSettings.Instance.SetupSettings.ScoresFromKill);
+            }
+
+            if (SessionSettings.Instance.ControlledUnit == unit)
+            {
+                Died?.Invoke(unit);
+            }
+           
+
+            PhotonNetwork.Destroy(unit.gameObject);
         }
     }
 }

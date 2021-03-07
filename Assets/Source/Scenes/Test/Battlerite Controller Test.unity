@@ -816,12 +816,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b31a4fd53eb00b4f8f92d1ac54bf899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - points:
+  factionsSpawnPoints:
+  - transforms:
     - {fileID: 492638551}
     - {fileID: 176991092}
     - {fileID: 1800055139}
-  - points:
+  - transforms:
     - {fileID: 1439960772}
     - {fileID: 1189567172}
     - {fileID: 1179314366}
@@ -1347,6 +1347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb57149b81ad0b4abf30a80dfa59a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOffline: 0
   systemsRoot: {fileID: 1357792421}
   unitSpawner: {fileID: 850438726}
   uiSwitcher: {fileID: 1651897899}
@@ -1355,22 +1356,26 @@ MonoBehaviour:
     - unitPrefab: {fileID: 1976316621184551738, guid: 3d585fdbbc040ae499c25a9a83a5a3c9,
         type: 3}
       playerID: 0
+      ownerActorNumber: 1
       factionID: 0
     - unitPrefab: {fileID: 1976316621184551738, guid: 3d585fdbbc040ae499c25a9a83a5a3c9,
         type: 3}
       playerID: 1
+      ownerActorNumber: 2
       factionID: 1
     - unitPrefab: {fileID: 1976316621184551738, guid: 3d585fdbbc040ae499c25a9a83a5a3c9,
         type: 3}
       playerID: 2
+      ownerActorNumber: 5
       factionID: 1
     - unitPrefab: {fileID: 1976316621184551738, guid: 3d585fdbbc040ae499c25a9a83a5a3c9,
         type: 3}
       playerID: 3
+      ownerActorNumber: 11
       factionID: 1
     respawnDurationInSec: 5
     matchDurationInSec: 300
-    scoresToWin: 3
+    scoresToWin: 50
     scoresFromKill: 1
 --- !u!4 &1221658439
 Transform:
@@ -2223,6 +2228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912354259921425539, guid: 891e9832051c05744a606a407a97c485,
+        type: 3}
+      propertyPath: damage
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2976268526362094943, guid: 891e9832051c05744a606a407a97c485,
         type: 3}

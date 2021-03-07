@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 3455908161061193089}
   - component: {fileID: 687136101723190751}
   - component: {fileID: 7477895903098183540}
+  - component: {fileID: 7941019946237766542}
+  - component: {fileID: 478810206455284493}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -128,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e877f54b35d9984a91955b2562b2d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 7780318723898310469}
 --- !u!114 &8819334824078885179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,9 +165,6 @@ MonoBehaviour:
   misslePrefab: {fileID: 1276973770915555227, guid: ef9ca6544c8e719408360c2ddb5053ed,
     type: 3}
   missleCreatePoint: {fileID: 1327722095006825574}
-  rollSpeed: 15
-  rollDuration: 0.4
-  rollCooldown: 2
 --- !u!114 &687136101723190751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +197,63 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7941019946237766542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976316621184551738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 478810206455284493}
+  - {fileID: 717568581481148303}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &478810206455284493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976316621184551738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 7
+    InterpolateOption: 1
+    InterpolateMoveTowardsSpeed: 5
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &2477781501484137569
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7780318723898310469}
   - component: {fileID: 7770414997071072537}
+  - component: {fileID: 717568581481148303}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -305,7 +363,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyGetDownAfter: 3
   bodyGetDownSpeed: 2
-  destroyDelay: 2
+  bodyDestroyDelay: 2
+--- !u!114 &717568581481148303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611690501316629941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &1976316620576594676
 PrefabInstance:
   m_ObjectHideFlags: 0

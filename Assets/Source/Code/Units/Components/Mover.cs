@@ -1,4 +1,5 @@
 ﻿using Source.Code.PlayerInput;
+using Source.Code.Utils;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Source.Code.Units.Components
         [SerializeField] private float speed;
         [SerializeField] private float rotSpeed = 15f;
 
+        private GlobalSettings globalSettings;
         private CharacterController cc;
         private Unit unit;
         private Transform lookPivot;
@@ -19,6 +21,7 @@ namespace Source.Code.Units.Components
         {
             this.unit = unit;
             cc = GetComponent<CharacterController>();
+            globalSettings = GlobalSettingsLoader.Load();
         }
 
         public void SubscribeOnInput(PlayerInputSystem inputSystem)
@@ -51,25 +54,38 @@ namespace Source.Code.Units.Components
             unit.Model.rotation = Quaternion.LookRotation(newSightDirection);
         }
 
-        public void MakeMove(Vector3 speed, float duration)
+        public void DoRoll(Vector2 fromPosition, Vector2 direction, float durationMinusLag)
         {
             StopAllCoroutines();
-            StartCoroutine(MakeMoveCoroutine(speed, duration));
+            StartCoroutine(DoRollCoroutine(fromPosition, direction, durationMinusLag));
         }
 
-        public IEnumerator MakeMoveCoroutine(Vector3 speed, float duration)
+        public IEnumerator DoRollCoroutine(Vector2 fromPosition, Vector2 direction, float durationMinusLag)
         {
+            float rollDuration = globalSettings.RollAbility.Duration;
+            float rollSpeed = globalSettings.RollAbility.Speed;
+            unit.PhotonTransformView.enabled = false;
+
+            Debug.Log("durationMinusLag = " + durationMinusLag);
+
             lockMoving = true;
             lockRotation = true;
 
+            Vector3 currentPos = unit.Transform.position;
+            Vector3 targetPos = 
+                new Vector3(fromPosition.x, unit.Transform.position.y, fromPosition.y) + new Vector3(direction.x, 0, direction.y) * (rollDuration * rollSpeed);
+
             float timer = 0;
-            while (timer < duration)
+            while (timer < durationMinusLag)
             {
-                cc.SimpleMove(speed);
+                unit.Transform.position = Vector3.Lerp(currentPos, targetPos, timer / durationMinusLag);
                 timer += Time.deltaTime;
                 yield return null;
             }
 
+            unit.Transform.position = targetPos;
+
+            unit.PhotonTransformView.enabled = true;
             lockMoving = false;
             lockRotation = false;
         }

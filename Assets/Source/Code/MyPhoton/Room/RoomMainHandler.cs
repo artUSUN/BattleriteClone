@@ -20,6 +20,8 @@ namespace Source.Code.MyPhoton.Room
 
         private void Awake()
         {
+            PhotonNetwork.AutomaticallySyncScene = true;
+
             players = PhotonNetwork.PlayerList;
 
             bool isMaster = PhotonNetwork.IsMasterClient;
@@ -137,10 +139,12 @@ namespace Source.Code.MyPhoton.Room
                 int factionID = cardSystem.GetPlayerFaction(player);
 
                 Hashtable props = new Hashtable { { GlobalConst.PLAYER_FACTION, factionID } };
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                player.SetCustomProperties(props);
+
+                Debug.Log($"For player {player.NickName} set prefab {plugUnitPrefab.name}");
 
                 props = new Hashtable { { GlobalConst.PLAYER_UNIT_PREFAB_NAME, plugUnitPrefab.name } };
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                player.SetCustomProperties(props);
             }
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
@@ -164,7 +168,7 @@ namespace Source.Code.MyPhoton.Room
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.Log("LoadLevel 3");
-                //PhotonNetwork.LoadLevel(3);
+                PhotonNetwork.LoadLevel(3);
             }
         }
 

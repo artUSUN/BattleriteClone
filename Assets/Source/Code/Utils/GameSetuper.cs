@@ -13,6 +13,9 @@ namespace Source.Code.Utils
 {
     public class GameSetuper : MonoBehaviour
     {
+#if UNITY_EDITOR
+        [SerializeField] private bool isOffline = false;
+#endif
         [Header("System links")]
         [SerializeField] private Transform systemsRoot;
         [SerializeField] private UnitSpawner unitSpawner;
@@ -24,9 +27,20 @@ namespace Source.Code.Utils
 
         private void Awake()
         {
-            PhotonNetwork.OfflineMode = true;
+#if UNITY_EDITOR
+            if (isOffline)
+            {
+                PhotonNetwork.OfflineMode = true;
+                PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 6 });
+            }
+#endif
 
-            if (PhotonNetwork.OfflineMode) setupSettings = manualSetupSettings;
+            Debug.Log($"Offline mode is = {PhotonNetwork.OfflineMode}");
+            if (PhotonNetwork.OfflineMode)
+            {
+                manualSetupSettings.ManualInitialize();
+                setupSettings = manualSetupSettings;
+            }
             else
             {
                 Debug.Log("Found setup settings from last scene");
@@ -34,10 +48,29 @@ namespace Source.Code.Utils
             }
 
             var sessionSettings = SessionSettings.New(systemsRoot, setupSettings);
+            unitSpawner.Initialize(sessionSettings);
 
-            //TEMP
-            sessionSettings.SetPlayerID(0);
-            //-----------------------------------
+            int currentPlayerActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+            int currentPlayerID = 0;
+            int currentPlayerFactionID = 0;
+
+            foreach (var faction in setupSettings.Factions)
+            {
+                bool isFind = false;
+                foreach (var player in faction.Value)
+                {
+                    if (currentPlayerActorNumber == player.OwnerActorNumber)
+                    {
+                        currentPlayerID = player.PlayerOrdinalID;
+                        currentPlayerFactionID = player.FactionID;
+                        isFind = true;
+                        break;
+                    }
+                }
+                if (isFind) break;
+            }
+
+            sessionSettings.SetCurrentPlayerData(currentPlayerID, currentPlayerFactionID);
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
 
@@ -48,6 +81,12 @@ namespace Source.Code.Utils
             uiSwitcher.Initialize();
 
             var virtualCamera = VirtualCamera.New(systemsRoot, inputSystem.LookPivot.Transform);
+
+            Faction.Initialize(sessionSettings, unitSpawner);
+
+            var playerSettings = sessionSettings.SetupSettings.Players[currentPlayerActorNumber];
+            unitSpawner.SpawnUnit(playerSettings, sessionSettings.Factions[playerSettings.FactionID].GetControlledUnitSpawnZone(playerSettings));
+
             //TEMP
             globalState.PreStartGame();
             //-----------------------------------
@@ -55,8 +94,9 @@ namespace Source.Code.Utils
 
         private SessionSetup LoadSetupSettings()
         {
-            return null;
-            //return new SessionSetup();
+            var setup = new SessionSetup();
+            setup.AutoIntitialize();
+            return setup;
         }
     }
 
@@ -64,24 +104,40 @@ namespace Source.Code.Utils
     public struct PlayerSettings
     {
         [SerializeField] private GameObject unitPrefab;
-        //[SerializeField] private string unitPrefabName;
         [SerializeField] private int playerID;
         [SerializeField] private int ownerActorNumber;
         [SerializeField] private int factionID;
 
-        public GameObject UnitPrefab => unitPrefab;
-        //public string UnitPrefab => unitPrefabName;
+        private string unitPrefabName;
+
+        public string UnitPrefabName 
+        { 
+            get
+            {
+                if (unitPrefabName == null)
+                {
+                    unitPrefabName = unitPrefab.name;
+                }
+                return unitPrefabName;
+            }
+            private set
+            {
+                unitPrefabName = value;
+            }
+        }
+
         public int PlayerOrdinalID => playerID;
         public int OwnerActorNumber => ownerActorNumber;
         public int FactionID => factionID;
 
-        //public PlayerSettings(int ownerActorNumber, int playerOrdinalID, int factionID, string unitPrefab)
-        //{
-        //    this.ownerActorNumber = ownerActorNumber;
-        //    playerID = playerOrdinalID;
-        //    this.factionID = factionID;
-        //    this.unitPrefabName = unitPrefab;
-        //}
+        public PlayerSettings(int ownerActorNumber, int playerOrdinalID, int factionID, string unitPrefabName)
+        {
+            this.ownerActorNumber = ownerActorNumber;
+            playerID = playerOrdinalID;
+            this.factionID = factionID;
+            this.unitPrefabName = unitPrefabName;
+            unitPrefab = null;
+        }
     }
 
     [Serializable]
@@ -94,30 +150,49 @@ namespace Source.Code.Utils
         [SerializeField] private int scoresToWin = 50;
         [SerializeField] private int scoresFromKill = 1;
 
-        public PlayerSettings[] Players => players;
+        public Dictionary<int, List<PlayerSettings>> Factions { get; private set; } = new Dictionary<int, List<PlayerSettings>>(); //factionID, players
+        public Dictionary<int, PlayerSettings> Players { get; private set; } = new Dictionary<int, PlayerSettings>();//actorNR, playerSettings 
         public float RespawnDuration => respawnDurationInSec;
         public int MatchDuration => matchDurationInSec;
         public int ScoresToWin => scoresToWin;
         public int ScoresFromKill => scoresFromKill;
 
-        //public SessionSetup()
-        //{
-        //    var players = PhotonNetwork.PlayerList;
+        public void AutoIntitialize()
+        {
+            var players = PhotonNetwork.PlayerList;
 
-        //    this.players = new PlayerSettings[players.Length];
+            for (int i = 0; i < players.Length; i++)
+            {
+                int factionID = PhotonExtensions.GetValueOrReturnDefault<int>(players[i].CustomProperties, GlobalConst.PLAYER_FACTION);
+                string unitPrefabName = PhotonExtensions.GetValueOrReturnDefault<string>(players[i].CustomProperties, GlobalConst.PLAYER_UNIT_PREFAB_NAME);
+                Debug.Log($"Player {players[i].NickName} in faction {factionID}, unit path = {unitPrefabName}");
+                var newPlayerSettings = new PlayerSettings(players[i].ActorNumber, i, factionID, unitPrefabName);
 
-        //    for (int i = 0; i < players.Length; i++)
-        //    {
-        //        int factionID = PhotonExtensions.GetValueOrReturnDefault<int>(players[i].CustomProperties, GlobalConst.PLAYER_FACTION); 
-        //        string unitPrefabName = PhotonExtensions.GetValueOrReturnDefault<string>(players[i].CustomProperties, GlobalConst.PLAYER_UNIT_PREFAB_NAME);
-        //        this.players[i] = new PlayerSettings(players[i].ActorNumber, i, factionID, unitPrefabName);
-        //    }
+                if (Factions.ContainsKey(factionID)) Factions[factionID].Add(newPlayerSettings);
+                else Factions.Add(factionID, new List<PlayerSettings> { newPlayerSettings });
 
-        //    var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+                Players.Add(players[i].ActorNumber, newPlayerSettings);
+            }
 
-        //    if (roomProperties.TryGetValue(GlobalConst.ROOM_MATCH_DURATION, out object matchDuration)) matchDurationInSec = Mathf.RoundToInt((float)matchDuration);
-        //    if (roomProperties.TryGetValue(GlobalConst.ROOM_POINTS_TO_WIN, out object pointsToWin)) scoresToWin = Mathf.RoundToInt((float)pointsToWin);
-        //    if (roomProperties.TryGetValue(GlobalConst.ROOM_UNIT_RESPAWN_DURATION, out object unitRespDuration)) respawnDurationInSec = (float)unitRespDuration;
-        //}
+            Debug.Log(PhotonNetwork.CurrentRoom);
+            var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+
+            if (roomProperties.TryGetValue(GlobalConst.ROOM_MATCH_DURATION, out object matchDuration)) matchDurationInSec = Mathf.RoundToInt((float)matchDuration);
+            if (roomProperties.TryGetValue(GlobalConst.ROOM_POINTS_TO_WIN, out object pointsToWin)) scoresToWin = Mathf.RoundToInt((float)pointsToWin);
+            if (roomProperties.TryGetValue(GlobalConst.ROOM_UNIT_RESPAWN_DURATION, out object unitRespDuration)) respawnDurationInSec = (float)unitRespDuration;
+        }
+
+        public void ManualInitialize()
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                int factionID = players[i].FactionID;
+
+                if (Factions.ContainsKey(factionID)) Factions[factionID].Add(players[i]);
+                else Factions.Add(factionID, new List<PlayerSettings> { players[i] });
+
+                Players.Add(players[i].OwnerActorNumber, players[i]);
+            }
+        }
     }
 }

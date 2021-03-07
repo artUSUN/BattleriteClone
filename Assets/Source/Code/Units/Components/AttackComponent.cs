@@ -1,10 +1,13 @@
-﻿using Source.Code.Environment.Missle;
+﻿using Photon.Pun;
+using Source.Code.Environment.Missle;
+using Source.Code.Utils;
 using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Source.Code.Units.Components
 {
+    [DisallowMultipleComponent]
     public class AttackComponent : MonoBehaviour
     {
         [Header("Main Attack Settigns")]
@@ -15,11 +18,8 @@ namespace Source.Code.Units.Components
         [SerializeField] private float missleSpeed = 3f;
         [SerializeField] private GameObject misslePrefab;
         [SerializeField] private Transform missleCreatePoint;
-        [Header("Roll settings")]
-        [SerializeField] private float rollSpeed = 10;
-        [SerializeField] private float rollDuration = 0.5f;
-        [SerializeField] private float rollCooldown = 8f;
 
+        private GlobalSettings globalSettings;
         private Unit unit;
         private WaitForSeconds rollEndWaiter;
         private AbilityCooldown roll, mainAttack;
@@ -31,8 +31,9 @@ namespace Source.Code.Units.Components
         {
             this.unit = unit;
             mainAttack = new AbilityCooldown(attackCooldown);
-            roll = new AbilityCooldown(rollCooldown);
-            rollEndWaiter = new WaitForSeconds(rollDuration);
+            globalSettings = GlobalSettingsLoader.Load();
+            roll = new AbilityCooldown(globalSettings.RollAbility.Cooldown);
+            rollEndWaiter = new WaitForSeconds(globalSettings.RollAbility.Duration);
         }
 
         public void TryRaiseMainAttack()
@@ -45,14 +46,36 @@ namespace Source.Code.Units.Components
         public void TryDoRoll()
         {
             if (roll.IsInCooldown || isAbilitiesLocked) return;
-            StartCoroutine(DoRoll());
+            Vector2 pos = new Vector2(unit.Transform.position.x, unit.Transform.position.z);
+            Vector2 dir = new Vector2(unit.Model.forward.x, unit.Model.forward.z);
+
+            StartCoroutine(DoRollCoroutine(pos, dir, 0));
+            unit.PhotonView.RPC("DoRoll", RpcTarget.Others, pos, dir);
             StartCoroutine(WaitForCooldown(roll));
         }
 
-        private IEnumerator DoRoll()
+        [PunRPC]
+        private void DoRoll(Vector2 fromPosition, Vector2 direction, PhotonMessageInfo info)
         {
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            StartCoroutine(DoRollCoroutine(fromPosition, direction, lag));
+        }
+
+        private IEnumerator DoRollCoroutine(Vector2 fromPosition, Vector2 direction, float lag)
+        {
+            float duration = GlobalSettingsLoader.Load().RollAbility.Duration;
+            float durationMinusLag = duration;
+
+            if (lag != 0)
+            {
+                
+                if (lag >= duration) yield break;
+                durationMinusLag = duration - lag;
+                rollEndWaiter = new WaitForSeconds(durationMinusLag);
+            }
+
             unit.AnimationComponent.PlayRollAnimation();
-            unit.MoverComponent.MakeMove(unit.Model.forward * rollSpeed, rollDuration);
+            unit.MoverComponent.DoRoll(fromPosition, direction, durationMinusLag);
 
             yield return rollEndWaiter;
 

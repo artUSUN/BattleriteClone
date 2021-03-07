@@ -10,12 +10,16 @@ namespace Source.Code.Utils
         [SerializeField] private CameraSettigns camera;
         [SerializeField] private LayersSettings layers;
         [SerializeField] private Prefabs prefabs;
+        [SerializeField] private Colors colors;
+        [SerializeField] private RollAbility rollAbility;
 
         public const string Version = "0.1";
         public InputSettings Input => input;
         public CameraSettigns Camera => camera;
         public LayersSettings Layers => layers;
         public Prefabs Prefabs => prefabs;
+        public Colors Colors => colors;
+        public RollAbility RollAbility => rollAbility;
     }
 
     [Serializable]
@@ -56,4 +60,32 @@ namespace Source.Code.Utils
         public GameObject ControlledUnitUnderline => controlledUnitUnderline;
     }
 
+
+    [Serializable]
+    public class Colors
+    {
+        [SerializeField] private Color alliasColor = Color.blue;
+        [SerializeField] private Color enemyColor = Color.red;
+        [SerializeField] private Color ownerColor = Color.green;
+
+        public Color AlliasColor => alliasColor;
+        public Color EnemyColor => enemyColor;
+        public Color OwnerColor => ownerColor;
+    }
+
+    [Serializable]
+    public class RollAbility
+    {
+        [SerializeField] private float speed = 15;
+        [SerializeField] private float duration = 0.4f;
+        [SerializeField] private float cooldown = 2f;
+
+        public float Speed => speed;
+        public float Duration => duration;
+        public float Cooldown => cooldown;
+    }
+
+
+
+    
 }

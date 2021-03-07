@@ -42,7 +42,6 @@ namespace Source.Code.Utils
 
         public void PreStartGame()
         {
-            unitSpawner.InitSpawn(setupSettings);
 
             //temp 
             StartGame();
@@ -231,20 +230,18 @@ namespace Source.Code.Utils
             }
         }
 
-        private void OnControlledUnitDied(Unit who, Unit from)
+        private void OnControlledUnitDied(Unit who)
         {
+            Debug.Log("OnControlledUnitDied");
             SetLocalState(LocalStates.Spectator);
 
         }
 
         private void OnControlledUnitSet(Unit unit)
         {
-            if (sessionSettings.GlobalState.Current == GlobalState.States.Game)
-            {
-                SetLocalState(LocalStates.Player);
-                var controlledUnitUnderline = GlobalSettingsLoader.Load().Prefabs.ControlledUnitUnderline;
-                MonoBehaviour.Instantiate(controlledUnitUnderline, sessionSettings.ControlledUnit.Model);
-            }
+            SetLocalState(LocalStates.Player);
+            var controlledUnitUnderline = GlobalSettingsLoader.Load().Prefabs.ControlledUnitUnderline;
+            MonoBehaviour.Instantiate(controlledUnitUnderline, sessionSettings.ControlledUnit.Model);
         }
     }
 

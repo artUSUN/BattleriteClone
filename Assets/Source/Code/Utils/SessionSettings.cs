@@ -28,6 +28,7 @@ namespace Source.Code.Utils
 
         #region Local player
         public int CurrentPlayerID { get; private set; } = -1;
+        public int CurrentPlayerFactionID { get; private set; } = -1;
         public Unit ControlledUnit { get; private set; }
         #endregion
 
@@ -39,7 +40,7 @@ namespace Source.Code.Utils
             {
                 if (allFactionLayers == default)
                 {
-                    foreach (var faction in SessionSettings.Instance.Factions)
+                    foreach (var faction in Factions)
                     {
                         allFactionLayers += 1 << faction.Layer;
                     }
@@ -71,7 +72,7 @@ namespace Source.Code.Utils
             ControlledUnitSet?.Invoke(unit);
         }
 
-        public void SetPlayerID(int playerID)
+        public void SetCurrentPlayerData(int playerID, int factionId)
         {
             if (CurrentPlayerID != -1)
             {
@@ -79,6 +80,7 @@ namespace Source.Code.Utils
                 return;
             }
             CurrentPlayerID = playerID;
+            CurrentPlayerFactionID = factionId;
         }
 
         public void SetFactions(Faction[] factions)

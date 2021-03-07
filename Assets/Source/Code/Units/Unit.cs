@@ -1,39 +1,35 @@
-﻿using Source.Code.PlayerInput;
+﻿using Photon.Pun;
+using Source.Code.PlayerInput;
 using Source.Code.Units.Components;
 using Source.Code.Utils;
+using System;
 using UnityEngine;
 
 namespace Source.Code.Units
 {
     public class Unit : MonoBehaviour
     {
-        public Vector2 DeltaMove { get; private set; }
+        [SerializeField] private Transform model;
+
+        private Action updateTick;
 
         public int OwnerPlayerID { get; private set; }
+        public int ActorNumber { get; private set; }
+        public string OwnerNickName { get; private set; }
         public Faction Faction { get; private set; }
         public AnimationComponent AnimationComponent { get; private set; }
         public AttackComponent AttackComponent { get; private set; }
         public Mover MoverComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
-        public Transform Model => AnimationComponent.Transform;
+        public Transform Model => model;
         public Transform Transform { get; private set; }
-        
-
-        public void Initialize(Faction faction, int ownerID)
-        {
-            if (Faction != null)
-            {
-                Debug.Log("Unit already initialized", transform);
-                return;
-            }
-
-            Faction = faction;
-            OwnerPlayerID = ownerID;
-        }
+        public bool IsItControlledUnit { get; private set; } = false;
+        public PhotonView PhotonView { get; private set; }
+        public Vector3 LastFramePosition { get; private set; }
+        public PhotonTransformViewClassic PhotonTransformView { get; private set; }
 
         public void SubscribeToEvents(PlayerInputSystem inputSystem)
         {
-            inputSystem.DeltaMove += OnDeltaMove;
             inputSystem.SpacePressed += OnSpacePressed;
             inputSystem.Mouse0Pressed += OnMouse0Pressed;
             MoverComponent.SubscribeOnInput(inputSystem);
@@ -41,7 +37,28 @@ namespace Source.Code.Units
 
         private void Awake()
         {
+            PhotonView = GetComponent<PhotonView>();
+            PhotonTransformView = GetComponent<PhotonTransformViewClassic>();
+
+            var sessionSettings = SessionSettings.Instance;
+
+            PlayerSettings playerSettings = sessionSettings.SetupSettings.Players[PhotonView.CreatorActorNr];
+            this.Faction = sessionSettings.Factions[playerSettings.FactionID];
+            OwnerPlayerID = playerSettings.PlayerOrdinalID;
+            ActorNumber = PhotonView.CreatorActorNr;
+
+            OwnerNickName = PhotonView.Owner.NickName;
+            gameObject.name = $"unit id{OwnerPlayerID} {PhotonView.Owner.NickName}";
+
+            gameObject.layer = Faction.Layer;
+
             Transform = transform;
+
+            if (Transform.localRotation != Quaternion.identity)
+            {
+                Model.localRotation = Transform.localRotation;
+                Transform.localRotation = Quaternion.identity;
+            }
 
             MoverComponent = GetComponent<Mover>();
             MoverComponent.Initialize(this);
@@ -54,12 +71,30 @@ namespace Source.Code.Units
 
             AnimationComponent = GetComponentInChildren<AnimationComponent>();
             AnimationComponent.Initialize(this);
+
+            if (PhotonNetwork.LocalPlayer.ActorNumber == PhotonView.CreatorActorNr)
+            {
+                IsItControlledUnit = true;
+                sessionSettings.SetControlledUnit(this);
+            }
+            else
+            {
+                updateTick += AnimationComponent.SpeedObserver;
+            }
+
+            Faction.AddUnit(this);
+
+            LastFramePosition = Transform.position;
         }
 
         private void Update()
         {
             AnimationComponent.SetLegsAnimation();
             MoverComponent.Run();
+
+            updateTick?.Invoke();
+
+            LastFramePosition = Transform.position;
         }
 
         private void OnSpacePressed()
@@ -70,11 +105,6 @@ namespace Source.Code.Units
         private void OnMouse0Pressed()
         {
             AttackComponent.TryRaiseMainAttack();
-        }
-
-        private void OnDeltaMove(Vector2 deltaMove)
-        {
-            DeltaMove = deltaMove;
         }
     }
 }

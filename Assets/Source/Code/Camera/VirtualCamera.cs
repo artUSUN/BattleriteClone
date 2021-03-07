@@ -59,7 +59,7 @@ namespace Source.Code.Cam
         private void SetConfinerActive(bool isActive)
         {
             camBorders.parent = isActive ? sessionSettings.ControlledUnit.Transform : lookPivot;
-            camBorders.localPosition = Vector3.zero;
+            camBorders.localPosition = isActive ? new Vector3(0, 0, -6.88f) : Vector3.zero;
             camBorders.localRotation = Quaternion.identity;
             confiner.enabled = isActive;
             camBorders.gameObject.SetActive(isActive);

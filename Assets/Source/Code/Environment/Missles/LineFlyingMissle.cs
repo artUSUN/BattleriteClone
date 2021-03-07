@@ -47,10 +47,18 @@ namespace Source.Code.Environment.Missle
             var colliders = Physics.OverlapSphere(tr.position, radius, collideWith, QueryTriggerInteraction.Ignore);
             if (colliders.Length != 0)
             {
+                int currentPlayer = SessionSettings.Instance.CurrentPlayerID;
+
                 foreach (var collider in colliders)
                 {
                     var unit = collider.GetComponent<Unit>();
-                    if (unit != null) unit.HealthComponent.ApplyDamage(damage, tr.position, owner);
+                    if (unit != null)
+                    {
+                        if (currentPlayer == unit.OwnerPlayerID)
+                        {
+                            unit.HealthComponent.ApplyDamage(damage, tr.position, owner);
+                        }
+                    }
                 }
 
                 var expGO = Instantiate(expPrefab, tr.position + direction * radius, Quaternion.identity);

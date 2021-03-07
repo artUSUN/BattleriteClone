@@ -1,4 +1,5 @@
-﻿using Source.Code.Units;
+﻿using Photon.Pun;
+using Source.Code.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,21 +14,34 @@ namespace Source.Code.Utils
         public int Layer { get; private set; }
         public LayerMask EnemiesLayers { get; private set; }
         public int AliveUnitsCount => units.Count;
-
-
-        public event Action<Unit, Unit> UnitDied;
+        
         public event Action<int> ScoresChanged;
 
 
-        private Dictionary<int, Unit> units; //Player id, Unit
+        private SpawnPoints spawnPoints;
+        private Dictionary<int, Unit> units = new Dictionary<int, Unit>(); //Player id, Unit
         private readonly UnitSpawner unitSpawner;
         private readonly SessionSettings sessionSettings;
 
-        public Faction(Dictionary<int, Unit> units, UnitSpawner unitSpawner)
+        public static void Initialize(SessionSettings sessionSettings, UnitSpawner unitSpawner)
         {
-            this.units = units;
+            int countOfFactions = sessionSettings.SetupSettings.Factions.Count;
+
+            var factions = new Faction[countOfFactions];
+
+            for (int i = 0; i < countOfFactions; i++)
+            {
+                factions[i] = new Faction(sessionSettings, unitSpawner);
+            }
+
+            sessionSettings.SetFactions(factions);
+        }
+
+        public Faction(SessionSettings sessionSettings, UnitSpawner unitSpawner)
+        {
             this.unitSpawner = unitSpawner;
-            sessionSettings = SessionSettings.Instance;
+            this.sessionSettings = sessionSettings;
+            
         }
 
         public void Initialize(int index)
@@ -43,14 +57,7 @@ namespace Source.Code.Utils
             }
             EnemiesLayers = enemiesLayers;
 
-            var tempUnits = units;
-            units = new Dictionary<int, Unit>();
-
-            foreach (var unit in tempUnits)
-            {
-                unit.Value.Initialize(this, unit.Key);
-                AddUnit(unit.Value);
-            }
+            spawnPoints = unitSpawner.FactionsSpawnPoints[index];
         }
 
         public int CompareTo(Faction f)
@@ -66,7 +73,7 @@ namespace Source.Code.Utils
                 return;
             }
             units.Add(unit.OwnerPlayerID, unit);
-            unit.gameObject.layer = Layer;
+            
             unit.HealthComponent.Died += OnUnitDied;
         }
 
@@ -84,6 +91,12 @@ namespace Source.Code.Utils
             ScoresChanged?.Invoke(Scores);
         }
 
+        public Transform GetControlledUnitSpawnZone(PlayerSettings playerSettings)
+        {
+            var players = sessionSettings.SetupSettings.Factions[ID];
+            return spawnPoints.Transforms[players.IndexOf(playerSettings)];
+        }
+
         private void RemoveUnit(Unit unit)
         {
             if (units.ContainsKey(unit.OwnerPlayerID) == false)
@@ -94,19 +107,18 @@ namespace Source.Code.Utils
             units.Remove(unit.OwnerPlayerID);
         }
 
-        private void OnUnitDied(Unit who, Unit from)
+        private void OnUnitDied(Unit who)
         {
-            UnitDied?.Invoke(who, from);
             RemoveUnit(who);
-            var players = sessionSettings.SetupSettings.Players;
-            var playerSettings = Array.Find(players, p => p.PlayerOrdinalID == who.OwnerPlayerID);
 
-            if (from != null)
+            int localPlayerActorNr = PhotonNetwork.LocalPlayer.ActorNumber;
+
+            if (localPlayerActorNr == who.ActorNumber)
             {
-                from.Faction.AddScore(sessionSettings.SetupSettings.ScoresFromKill);
+                var playerSettings = sessionSettings.SetupSettings.Players[localPlayerActorNr];
+                Transform spawnPoint = GetControlledUnitSpawnZone(playerSettings);
+                unitSpawner.RespawnUnit(playerSettings, spawnPoint);
             }
-
-            unitSpawner.RespawnUnit(playerSettings);
         }
     }
 }
