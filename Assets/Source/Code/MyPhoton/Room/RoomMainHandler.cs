@@ -141,9 +141,10 @@ namespace Source.Code.MyPhoton.Room
                 Hashtable props = new Hashtable { { GlobalConst.PLAYER_FACTION, factionID } };
                 player.SetCustomProperties(props);
 
-                Debug.Log($"For player {player.NickName} set prefab {plugUnitPrefab.name}");
-
                 props = new Hashtable { { GlobalConst.PLAYER_UNIT_PREFAB_NAME, plugUnitPrefab.name } };
+                player.SetCustomProperties(props);
+
+                props = new Hashtable { { GlobalConst.PLAYER_LOADED_LEVEL, false } };
                 player.SetCustomProperties(props);
             }
 

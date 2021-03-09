@@ -20,11 +20,14 @@
         public const string ROOM_POWERUP_HEAL_POWER = "HealPowerupPower"; //float
 
         public const string GAME_STATE = "GameState"; //byte = 0 - preGame, 1 - game, 2 - gameEnded
-        public const string FACTION_SCORES = "FactionScores"; //int[]
 
-
+        public static string GetFactionScoresKey(int factionID)
+        {
+            return "Faction" + factionID + "Scores";
+        }
 
         //RPC consts
         public const byte ROOM_START_MATCH_BEGIN = 1; //null
+        public const byte GAME_PRE_GAME_TIMER_STARTED = 2; //current time (float)
     }
 }

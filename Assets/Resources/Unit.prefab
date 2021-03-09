@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 34
   attackCooldown: 1
-  delay: 0.1
+  attackDelay: 0.1
   missleLifeTime: 3
   missleSpeed: 12
   misslePrefab: {fileID: 1276973770915555227, guid: ef9ca6544c8e719408360c2ddb5053ed,

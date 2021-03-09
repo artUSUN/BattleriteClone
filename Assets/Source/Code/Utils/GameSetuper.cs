@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using Photon.Realtime;
 using Source.Code.Cam;
 using Source.Code.Extensions;
@@ -24,6 +25,7 @@ namespace Source.Code.Utils
         [SerializeField] private SessionSetup manualSetupSettings;
 
         private SessionSetup setupSettings;
+        private bool isLoaded = false;
 
         private void Awake()
         {
@@ -74,7 +76,7 @@ namespace Source.Code.Utils
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
 
-            var globalState = new GlobalState(unitSpawner, setupSettings, systemsRoot, inputSystem);
+            var globalState = new GlobalState(setupSettings, systemsRoot, inputSystem);
             var localState = new LocalState(globalState, inputSystem);
             sessionSettings.SetGameStates(globalState, localState);
 
@@ -87,9 +89,17 @@ namespace Source.Code.Utils
             var playerSettings = sessionSettings.SetupSettings.Players[currentPlayerActorNumber];
             unitSpawner.SpawnUnit(playerSettings, sessionSettings.Factions[playerSettings.FactionID].GetControlledUnitSpawnZone(playerSettings));
 
-            //TEMP
-            globalState.PreStartGame();
-            //-----------------------------------
+            globalState.SetWaitingForPlayersState();
+        }
+
+        private void Update()
+        {
+            if (isLoaded) return;
+
+            isLoaded = true;
+
+            Hashtable props = new Hashtable { { GlobalConst.PLAYER_LOADED_LEVEL, true } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
         private SessionSetup LoadSetupSettings()

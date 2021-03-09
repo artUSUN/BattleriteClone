@@ -13,7 +13,7 @@ namespace Source.Code.Units.Components
         [Header("Main Attack Settigns")]
         [SerializeField] private float damage = 34;
         [SerializeField] private float attackCooldown = 1f;
-        [SerializeField] private float delay = 0.1f;
+        [SerializeField] private float attackDelay = 0.1f;
         [SerializeField] private float missleLifeTime = 1f;
         [SerializeField] private float missleSpeed = 3f;
         [SerializeField] private GameObject misslePrefab;
@@ -21,7 +21,7 @@ namespace Source.Code.Units.Components
 
         private GlobalSettings globalSettings;
         private Unit unit;
-        private WaitForSeconds rollEndWaiter;
+        private WaitForSeconds rollEndWaiter, attackWaiter;
         private AbilityCooldown roll, mainAttack;
         private bool isAbilitiesLocked = false;
 
@@ -34,12 +34,18 @@ namespace Source.Code.Units.Components
             globalSettings = GlobalSettingsLoader.Load();
             roll = new AbilityCooldown(globalSettings.RollAbility.Cooldown);
             rollEndWaiter = new WaitForSeconds(globalSettings.RollAbility.Duration);
+            attackWaiter = new WaitForSeconds(attackDelay);
         }
 
         public void TryRaiseMainAttack()
         {
             if (mainAttack.IsInCooldown || isAbilitiesLocked) return;
-            DoMainAttack();
+
+            Vector2 pos = new Vector2(missleCreatePoint.position.x, missleCreatePoint.position.z);
+            Vector2 dir = new Vector2(unit.Model.forward.x, unit.Model.forward.z);
+
+            StartCoroutine(DoMainAttackCoroutine(pos, dir, 0));
+            unit.PhotonView.RPC("DoMainAttack", RpcTarget.Others, pos, dir);
             StartCoroutine(WaitForCooldown(mainAttack));
         }
 
@@ -64,34 +70,45 @@ namespace Source.Code.Units.Components
         private IEnumerator DoRollCoroutine(Vector2 fromPosition, Vector2 direction, float lag)
         {
             float duration = GlobalSettingsLoader.Load().RollAbility.Duration;
-            float durationMinusLag = duration;
 
             if (lag != 0)
             {
-                
                 if (lag >= duration) yield break;
-                durationMinusLag = duration - lag;
+                float durationMinusLag = duration - lag;
                 rollEndWaiter = new WaitForSeconds(durationMinusLag);
             }
 
             unit.AnimationComponent.PlayRollAnimation();
-            unit.MoverComponent.DoRoll(fromPosition, direction, durationMinusLag);
+            unit.MoverComponent.DoRoll(fromPosition, direction, lag);
 
             yield return rollEndWaiter;
 
             unit.AnimationComponent.EndRollAnimation();
         }
 
-        private void DoMainAttack()
+        [PunRPC]
+        private void DoMainAttack(Vector2 position, Vector2 direction, PhotonMessageInfo info)
         {
-            unit.AnimationComponent.PlayAnimation("MainAttack");
-            Invoke(nameof(InstantiatePrefab), delay);
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            StartCoroutine(DoMainAttackCoroutine(position, direction, lag));
         }
 
-        private void InstantiatePrefab()
+        private IEnumerator DoMainAttackCoroutine(Vector2 position, Vector2 direction, float lag)
         {
-            var missle = Instantiate(misslePrefab, missleCreatePoint.position, Quaternion.identity);
-            missle.GetComponent<LineFlyingMissle>().Initialize(unit, unit.Model.forward, missleSpeed, missleLifeTime, unit.Faction.EnemiesLayers, damage);
+            Vector3 spawnPosition = new Vector3(position.x, missleCreatePoint.position.y, position.y);
+            Vector3 directionVector3 = new Vector3(direction.x, 0, direction.y);
+
+            unit.AnimationComponent.PlayAnimation("MainAttack");
+
+            if (lag == 0) yield return attackWaiter;
+            else if (lag < attackDelay) yield return new WaitForSeconds(attackDelay - lag);
+            else
+            {
+                spawnPosition += directionVector3 * lag;
+            }
+            var missle = Instantiate(misslePrefab, spawnPosition, Quaternion.identity);
+            float missleLifeTimeWithLag = missleLifeTime - (lag - attackDelay);
+            missle.GetComponent<LineFlyingMissle>().Initialize(unit, directionVector3, missleSpeed, missleLifeTimeWithLag, unit.Faction.EnemiesLayers, damage);
         }
 
         

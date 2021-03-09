@@ -3,6 +3,7 @@ using Source.Code.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace Source.Code.Utils
 {
@@ -16,7 +17,6 @@ namespace Source.Code.Utils
         public int AliveUnitsCount => units.Count;
         
         public event Action<int> ScoresChanged;
-
 
         private SpawnPoints spawnPoints;
         private Dictionary<int, Unit> units = new Dictionary<int, Unit>(); //Player id, Unit
@@ -77,17 +77,19 @@ namespace Source.Code.Utils
             unit.HealthComponent.Died += OnUnitDied;
         }
 
-        public void AddScore(int count)
+        public void SetScore(int count)
         {
             if (sessionSettings.GlobalState.Current != GlobalState.States.Game) return;
 
             if (count < 0)
             {
-                Debug.LogError($"Can't add to Faction {ID} less than zero coins.");
+                Debug.LogError($"Can't set to Faction {ID} less than zero coins.");
                 return;
             }
 
-            Scores += count;
+            if (Scores == count) return;
+
+            Scores = count;
             ScoresChanged?.Invoke(Scores);
         }
 

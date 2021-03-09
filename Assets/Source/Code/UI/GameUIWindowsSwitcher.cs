@@ -8,6 +8,7 @@ namespace Source.Code.UI
         [SerializeField] private TeamVsTeamScore scoreWindow;
         [SerializeField] private MatchTimer matchTimerWindow;
         [SerializeField] private EscMenu escMenu;
+        [SerializeField] private WaitingForPlayersPanel waitingForPlayersPanel;
 
         private SessionSettings sessionSettings;
 
@@ -30,7 +31,15 @@ namespace Source.Code.UI
         {
             switch (globalState)
             {
-                case GlobalState.States.PreGame:
+                case GlobalState.States.WaitingForOtherPlayers:
+                    {
+                        waitingForPlayersPanel.Initialize();
+                    }
+                    break;
+                case GlobalState.States.PreGameTimer:
+                    {
+                        waitingForPlayersPanel.gameObject.SetActive(false);
+                    }
                     break;
                 case GlobalState.States.Game:
                     {

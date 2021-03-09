@@ -25,20 +25,29 @@ namespace Source.Code.UI
         {
             switch (state)
             {
-                case GlobalState.States.PreGame:
+                case GlobalState.States.WaitingForOtherPlayers:
                     break;
                 case GlobalState.States.Game:
                     break;
                 case GlobalState.States.GameEnded:
                     {
+                        if (sessionSettings.Factions[0].Scores == sessionSettings.Factions[1].Scores)
+                        {
+                            whoWinsTitleTMP.color = Color.black;
+                            whoWinsTitleTMP.text = "Draw!";
+                            whoWinsTitleTMP.gameObject.SetActive(true);
+                            Debug.Log("Draw");
+                            return;
+                        }
+
                         bool isBlueWins = sessionSettings.Factions[0].Scores > sessionSettings.Factions[1].Scores;
                         string winnerSideName = isBlueWins ? "Blue" : "Red";
                         whoWinsTitleTMP.color = isBlueWins ? Color.blue : Color.red;
-                        whoWinsTitleTMP.text = winnerSideName + " Team wins!";
+                        whoWinsTitleTMP.text = winnerSideName + " Team won!";
                         whoWinsTitleTMP.gameObject.SetActive(true);
 
-                        Debug.Log("Winner is " + sessionSettings.GlobalState.factionsSortedByScore[0].ID + " with score " + sessionSettings.GlobalState.factionsSortedByScore[0].Scores);
-                        Debug.Log("Loser is " + sessionSettings.GlobalState.factionsSortedByScore[1].ID + " with score " + sessionSettings.GlobalState.factionsSortedByScore[1].Scores);
+                        Debug.Log("Winner is " + sessionSettings.GlobalState.FactionsSortedByScore[0].ID + " with score " + sessionSettings.GlobalState.FactionsSortedByScore[0].Scores);
+                        Debug.Log("Loser is " + sessionSettings.GlobalState.FactionsSortedByScore[1].ID + " with score " + sessionSettings.GlobalState.FactionsSortedByScore[1].Scores);
                     }
                     break;
                 default:

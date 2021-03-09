@@ -1,4 +1,8 @@
-﻿using Source.Code.PlayerInput;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using Source.Code.MyPhoton;
+using Source.Code.PlayerInput;
 using Source.Code.Units;
 using System;
 using System.Collections;
@@ -11,28 +15,30 @@ namespace Source.Code.Utils
     {
         public enum States
         {
-            PreGame,
+            Default,
+            WaitingForOtherPlayers,
+            PreGameTimer,
             Game,
             GameEnded
         }
 
-        private UnitSpawner unitSpawner;
         private SessionSettings sessionSettings;
         private SessionSetup setupSettings;
         private PlayerInputSystem inputSystem;
         private Transform systemsRoot;
         private Timer matchTimer;
+        private Timer preMatchTimer;
 
-        public List<Faction> factionsSortedByScore = new List<Faction>();
+        public List<Faction> FactionsSortedByScore = new List<Faction>();
         public float MatchTime => matchTimer.Time;
-        public States Current { get; private set; } = States.PreGame;
+        public float PreMatchTime => preMatchTimer.Time;
+        public States Current { get; private set; } = States.Default;
 
 
         public event Action<States> GlobalStateChanged;
 
-        public GlobalState(UnitSpawner unitSpawner, SessionSetup setupSettings, Transform systems, PlayerInputSystem inputSystem)
+        public GlobalState(SessionSetup setupSettings, Transform systems, PlayerInputSystem inputSystem)
         {
-            this.unitSpawner = unitSpawner;
             this.setupSettings = setupSettings;
             this.inputSystem = inputSystem;
             systemsRoot = systems;
@@ -40,22 +46,58 @@ namespace Source.Code.Utils
             matchTimer = Timer.New(setupSettings.MatchDuration, systemsRoot);
         }
 
-        public void PreStartGame()
+        public void SetWaitingForPlayersState()
         {
+            if (Current != States.Default)
+            {
+                Debug.LogError($"Try switch to Pre Game State when in {Current} State");
+                return;
+            }
+            Current = States.WaitingForOtherPlayers;
+            Debug.Log($"Current state is {Current}");
 
-            //temp 
-            StartGame();
+            GlobalStateChanged?.Invoke(Current);
+
+            if (PhotonNetwork.OfflineMode == true)
+            {
+                SetPreGameTimer(0);
+            }
+        }
+
+        public void SetPreGameTimer(float lag)
+        {
+            if (Current != States.WaitingForOtherPlayers)
+            {
+                Debug.LogError($"Try switch to Pre Game State when in {Current} State");
+                return;
+            }
+            Current = States.PreGameTimer;
+            Debug.Log($"Current state is {Current}");
+
+            float timerDuration = 3 - lag;
+            preMatchTimer = Timer.New(timerDuration, systemsRoot);
+            preMatchTimer.Play();
+            preMatchTimer.Ended += StartGame;
+
+            object content = (float)PhotonNetwork.Time;
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            PhotonNetwork.RaiseEvent(GlobalConst.ROOM_START_MATCH_BEGIN, content, raiseEventOptions, SendOptions.SendReliable);
+
+            GlobalStateChanged?.Invoke(Current);
         }
 
         public void StartGame()
         {
-            if (Current != States.PreGame)
+            if (Current != States.PreGameTimer)
             {
                 Debug.LogError($"Try switch to Game State when in {Current} State");
                 return;
             }
 
             Current = States.Game;
+            Debug.Log($"Current state is {Current}");
+
+            preMatchTimer.Ended -= StartGame;
 
             foreach (var faction in sessionSettings.Factions) faction.ScoresChanged += CheckScores;
 
@@ -76,10 +118,11 @@ namespace Source.Code.Utils
             matchTimer.Ended -= EndGame;
 
             Current = States.GameEnded;
+            Debug.Log($"Current state is {Current}");
 
-            factionsSortedByScore.AddRange(sessionSettings.Factions);
-            factionsSortedByScore.Sort();
-            factionsSortedByScore.Reverse();
+            FactionsSortedByScore.AddRange(sessionSettings.Factions);
+            FactionsSortedByScore.Sort();
+            FactionsSortedByScore.Reverse();
 
             inputSystem.gameObject.SetActive(false);
             matchTimer.Pause();
@@ -239,7 +282,6 @@ namespace Source.Code.Utils
 
         private void OnControlledUnitSet(Unit unit)
         {
-            SetLocalState(LocalStates.Player);
             var controlledUnitUnderline = GlobalSettingsLoader.Load().Prefabs.ControlledUnitUnderline;
             MonoBehaviour.Instantiate(controlledUnitUnderline, sessionSettings.ControlledUnit.Model);
         }

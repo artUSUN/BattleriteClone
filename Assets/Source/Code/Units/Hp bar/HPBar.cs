@@ -40,12 +40,18 @@ namespace Source.Code.Units.Bars
 
             Color nickNameColor;
 
-            if (isAlliasForControlledUnit)
-            {
-                if (sessionSettings.CurrentPlayerID == unit.OwnerPlayerID) nickNameColor = GlobalSettingsLoader.Load().Colors.OwnerColor;
-                else nickNameColor = GlobalSettingsLoader.Load().Colors.AlliasColor;
-            }
-            else nickNameColor = GlobalSettingsLoader.Load().Colors.EnemyColor;
+            if (unit.Faction.ID == 0) nickNameColor = Color.blue;
+            else nickNameColor = Color.red;
+
+            if (sessionSettings.CurrentPlayerID == unit.OwnerPlayerID) nickNameColor = GlobalSettingsLoader.Load().Colors.OwnerColor;
+
+            //Allias-Enemies
+            //if (isAlliasForControlledUnit)
+            //{
+            //    if (sessionSettings.CurrentPlayerID == unit.OwnerPlayerID) nickNameColor = GlobalSettingsLoader.Load().Colors.OwnerColor;
+            //    else nickNameColor = GlobalSettingsLoader.Load().Colors.AlliasColor;
+            //}
+            //else nickNameColor = GlobalSettingsLoader.Load().Colors.EnemyColor;
 
             nickNameTMP.color = nickNameColor;
         }

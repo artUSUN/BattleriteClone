@@ -54,36 +54,40 @@ namespace Source.Code.Units.Components
             unit.Model.rotation = Quaternion.LookRotation(newSightDirection);
         }
 
-        public void DoRoll(Vector2 fromPosition, Vector2 direction, float durationMinusLag)
+        public void DoRoll(Vector2 fromPosition, Vector2 direction, float lag)
         {
             StopAllCoroutines();
-            StartCoroutine(DoRollCoroutine(fromPosition, direction, durationMinusLag));
+            StartCoroutine(DoRollCoroutine(fromPosition, direction, lag));
         }
 
-        public IEnumerator DoRollCoroutine(Vector2 fromPosition, Vector2 direction, float durationMinusLag)
+        public IEnumerator DoRollCoroutine(Vector2 fromPosition, Vector2 direction, float lag)
         {
             float rollDuration = globalSettings.RollAbility.Duration;
             float rollSpeed = globalSettings.RollAbility.Speed;
             unit.PhotonTransformView.enabled = false;
 
-            Debug.Log("durationMinusLag = " + durationMinusLag);
-
             lockMoving = true;
             lockRotation = true;
 
-            Vector3 currentPos = unit.Transform.position;
-            Vector3 targetPos = 
-                new Vector3(fromPosition.x, unit.Transform.position.y, fromPosition.y) + new Vector3(direction.x, 0, direction.y) * (rollDuration * rollSpeed);
+            Vector3 directionVector3 = new Vector3(direction.x, 0, direction.y);
+            Vector3 posWithLag = 
+                new Vector3(fromPosition.x, unit.Transform.position.y, fromPosition.y) + directionVector3 * (lag * rollSpeed);
+            unit.Transform.position = posWithLag;
 
+            //Vector3 currentPos = unit.Transform.position;
+            //Vector3 targetPos = 
+            //    new Vector3(fromPosition.x, unit.Transform.position.y, fromPosition.y) + directionVector3 * (rollDuration * rollSpeed);
+            float durationMinusLag = rollDuration - lag;
             float timer = 0;
             while (timer < durationMinusLag)
             {
-                unit.Transform.position = Vector3.Lerp(currentPos, targetPos, timer / durationMinusLag);
+                //unit.Transform.position = Vector3.Lerp(currentPos, targetPos, timer / durationMinusLag);
+                cc.Move(directionVector3 * rollSpeed * Time.deltaTime);
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            unit.Transform.position = targetPos;
+            
 
             unit.PhotonTransformView.enabled = true;
             lockMoving = false;

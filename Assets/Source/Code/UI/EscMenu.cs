@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace Source.Code.UI
 {
@@ -12,7 +12,7 @@ namespace Source.Code.UI
 
         public void ExitToMainMenu()
         {
-            SceneManager.LoadScene(0);
+            PhotonNetwork.Disconnect();
         }
     }
 }
