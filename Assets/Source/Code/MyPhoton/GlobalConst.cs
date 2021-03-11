@@ -23,11 +23,11 @@
 
         public static string GetFactionScoresKey(int factionID)
         {
-            return "Faction" + factionID + "Scores";
+            return $"Faction{factionID}Scores";
         }
 
         //RPC consts
         public const byte ROOM_START_MATCH_BEGIN = 1; //null
-        public const byte GAME_PRE_GAME_TIMER_STARTED = 2; //current time (float)
+        public const byte PRE_GAME_TIMER_STARTED = 2; //current time (float)
     }
 }

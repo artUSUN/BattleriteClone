@@ -72,6 +72,8 @@ namespace Source.Code.Utils
                 if (isFind) break;
             }
 
+
+
             sessionSettings.SetCurrentPlayerData(currentPlayerID, currentPlayerFactionID);
 
             var inputSystem = PlayerInputSystem.New(systemsRoot, sessionSettings);
@@ -88,6 +90,8 @@ namespace Source.Code.Utils
 
             var playerSettings = sessionSettings.SetupSettings.Players[currentPlayerActorNumber];
             unitSpawner.SpawnUnit(playerSettings, sessionSettings.Factions[playerSettings.FactionID].GetControlledUnitSpawnZone(playerSettings));
+
+            PhotonObserver photObsr = PhotonObserver.New(sessionSettings, systemsRoot);
 
             globalState.SetWaitingForPlayersState();
         }

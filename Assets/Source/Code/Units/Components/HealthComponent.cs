@@ -38,7 +38,6 @@ namespace Source.Code.Units.Components
 
         private void OnDisable()
         {
-            Debug.Log("On Disable in Health Component");
             if (SessionSettings.Instance.ControlledUnit != unit)
             {
                 Died?.Invoke(unit);
@@ -72,14 +71,17 @@ namespace Source.Code.Units.Components
         [PunRPC]
         private void ApplyDamageRemotely(float value, Vector3 fromPoint, PhotonMessageInfo info)
         {
+            Debug.Log($"SEND info.Sender is {info.Sender}");
             var fromPlayer = info.Sender;
             Unit fromUnit = null;
             Faction fromFaction = null;
-            if (info.Sender != null)
+            if (fromPlayer != null)
             {
+                Debug.Log($"SEND sender actor num is {fromPlayer.ActorNumber}");
                 var sessionSettigns = SessionSettings.Instance;
                 PlayerSettings playerSettings = sessionSettigns.SetupSettings.Players[fromPlayer.ActorNumber];
                 fromFaction = sessionSettigns.Factions[playerSettings.FactionID];
+
             }
 
             CurrentHP -= value;
@@ -130,11 +132,12 @@ namespace Source.Code.Units.Components
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    
                     string factionScoresKey = GlobalConst.GetFactionScoresKey(fromFaction.ID);
+                    Debug.Log($"SEND Faction ID is {fromFaction.ID}, key is {factionScoresKey}");
                     int score = 
                         SessionSettings.Instance.SetupSettings.ScoresFromKill + 
                         PhotonExtensions.GetValueOrReturnDefault<int>(PhotonNetwork.CurrentRoom.CustomProperties, factionScoresKey);
+                    Debug.Log($"SEND Faction ID is {fromFaction.ID}, score is {score}");
                     Hashtable props = new Hashtable { { factionScoresKey, score } };
                     PhotonNetwork.CurrentRoom.SetCustomProperties(props);
                 }
@@ -145,7 +148,10 @@ namespace Source.Code.Units.Components
                 Died?.Invoke(unit);
             }
 
-            PhotonNetwork.Destroy(unit.gameObject);
+            if (unit.PhotonView.IsMine)
+            {
+                PhotonNetwork.Destroy(unit.gameObject);
+            }
         }
     }
 }

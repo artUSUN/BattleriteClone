@@ -58,10 +58,10 @@ namespace Source.Code.Utils
 
             GlobalStateChanged?.Invoke(Current);
 
-            if (PhotonNetwork.OfflineMode == true)
-            {
-                SetPreGameTimer(0);
-            }
+            //if (PhotonNetwork.OfflineMode == true)
+            //{
+            //    SetPreGameTimer(0);
+            //}
         }
 
         public void SetPreGameTimer(float lag)
@@ -79,9 +79,13 @@ namespace Source.Code.Utils
             preMatchTimer.Play();
             preMatchTimer.Ended += StartGame;
 
-            object content = (float)PhotonNetwork.Time;
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-            PhotonNetwork.RaiseEvent(GlobalConst.ROOM_START_MATCH_BEGIN, content, raiseEventOptions, SendOptions.SendReliable);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log($"Event sended");
+                object[] content = new object[] { (float)PhotonNetwork.Time };
+                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+                PhotonNetwork.RaiseEvent(GlobalConst.PRE_GAME_TIMER_STARTED, content, raiseEventOptions, SendOptions.SendReliable);
+            }
 
             GlobalStateChanged?.Invoke(Current);
         }
@@ -204,12 +208,14 @@ namespace Source.Code.Utils
 
         private SessionSettings sessionSettings;
         private PlayerInputSystem inputSystem;
+        private GlobalState globalState;
 
         public LocalStates Current { get; private set; } = LocalStates.Spectator;
         public event Action<LocalStates> StateChanged;
 
         public LocalState(GlobalState globalState, PlayerInputSystem inputSystem)
         {
+            this.globalState = globalState;
             sessionSettings = SessionSettings.Instance;
             globalState.GlobalStateChanged += OnGlobalStateChanged;
             sessionSettings.ControlledUnitSet += OnControlledUnitSet;
@@ -269,21 +275,26 @@ namespace Source.Code.Utils
                     }
                     break;
                 case LocalStates.Spectator:
+                    {
+                        sessionSettings.ControlledUnitSet += OnControlledUnitSet;
+                    }
                     break;
             }
         }
 
         private void OnControlledUnitDied(Unit who)
         {
-            Debug.Log("OnControlledUnitDied");
             SetLocalState(LocalStates.Spectator);
-
         }
 
         private void OnControlledUnitSet(Unit unit)
         {
             var controlledUnitUnderline = GlobalSettingsLoader.Load().Prefabs.ControlledUnitUnderline;
             MonoBehaviour.Instantiate(controlledUnitUnderline, sessionSettings.ControlledUnit.Model);
+            if (globalState.Current == GlobalState.States.Game)
+            {
+                SetLocalState(LocalStates.Player);
+            }
         }
     }
 

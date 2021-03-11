@@ -22,9 +22,11 @@ namespace Source.Code.UI
             gameObject.SetActive(true);
 
             var players = PhotonNetwork.PlayerList;
+            Debug.Log("Players Count " + players.Length);
             foreach (var player in players)
             {
                 bool isLoaded = PhotonExtensions.GetValueOrReturnDefault<bool>(player.CustomProperties, GlobalConst.PLAYER_LOADED_LEVEL);
+                Debug.Log("isLoaded " + isLoaded);
                 if (!isLoaded)
                 {
                     var nickGO = Instantiate(playerNicknamePrefab, placePlayersNamesTransform);
@@ -35,6 +37,7 @@ namespace Source.Code.UI
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
+            Debug.Log("ProperitesUpdated");
             if (changedProps.TryGetValue(GlobalConst.PLAYER_LOADED_LEVEL, out object result))
             {
                 if ((bool)result)
@@ -46,6 +49,12 @@ namespace Source.Code.UI
                 }
             }
 
+            CheckIsAllReady();
+        }
+
+        public void CheckIsAllReady()
+        {
+            Debug.Log("CheckIsAllReady");
             if (PhotonNetwork.IsMasterClient)
             {
                 bool isAllLoaded = true;
@@ -53,7 +62,7 @@ namespace Source.Code.UI
                 foreach (var player in players)
                 {
                     bool isLoaded = PhotonExtensions.GetValueOrReturnDefault<bool>(player.CustomProperties, GlobalConst.PLAYER_LOADED_LEVEL);
-                    if (!isLoaded == false)
+                    if (isLoaded == false)
                     {
                         isAllLoaded = false;
                         break;
